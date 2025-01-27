@@ -1,32 +1,32 @@
-import { ChevronRight } from 'lucide-react'
-import ProjectTable from './components/ProjectTable'
-import Sidebar from './components/Sidebar'
-import Header from './components/Header'
-import { projects } from './data/projects'
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import ProjectTable from "./components/ProjectTable";
+import Sidebar from "./components/Sidebar";
+import Header from "./components/Header";
+import { projects } from "./data/projects";
+import SIP from "./pages/SIP";
+import SIPEdit from "./pages/SIPEdit";
 
 function App() {
-  return (
-    <div className="min-h-screen bg-gray-50/50">
-      <Header />
-      <div className="flex pt-12">
-        <Sidebar />
-        <div className="flex-1 ml-64">
-          <div className="max-w-7xl mx-auto px-4 py-8">
-            <div className="mb-8">
-              <div className="text-sm text-gray-500 mb-2 flex items-center gap-2">
-                <span>Projects</span>
-                <ChevronRight size={16} className="text-gray-400" />
-                <span>Project Management</span>
-              </div>
-              <h1 className="text-3xl font-bold text-gray-900">Project Management</h1>
+    return (
+        <Router>
+            <div className="min-h-screen bg-gray-50/50">
+                <Header />
+                <div className="flex pt-12">
+                    <Sidebar />
+                    <div className="flex-1 ml-64">
+                        <div className="max-w-7xl mx-auto px-4 py-8">
+                            <Routes>
+                                <Route path="/SIP" element={<SIP />} />
+                                <Route path="/SIP/edit" element={<SIPEdit />} />
+                                <Route path="/" element={<Navigate to="/SIP" replace />} />
+                                <Route path="/projects" element={<ProjectTable projects={projects} />} />
+                            </Routes>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <ProjectTable projects={projects} />
-          </div>
-        </div>
-      </div>
-    </div>
-  )
+        </Router>
+    );
 }
 
-export default App
+export default App;
