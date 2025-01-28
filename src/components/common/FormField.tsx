@@ -43,18 +43,13 @@ export const FormField: React.FC<FormFieldProps> = ({ label, name, value, onChan
             <div className="sm:col-span-2">
                 <div className="mt-2 relative">
                     {currency && (
-                        <select
-                            value={currency.value}
-                            onChange={(e) => currency.onCurrencyChange(e.target.value)}
-                            className={`absolute left-0 top-0 h-full px-2 w-20 border-0 bg-[#FFE5CC] text-gray-900 focus:ring-[#FF6600] sm:text-sm z-10 appearance-none focus:outline-none ${
+                        <div
+                            className={`absolute left-0 top-0 h-full px-2 w-20 border-0 bg-[#FFE5CC] text-gray-900 sm:text-sm z-10 flex items-center ${
                                 disabled ? "bg-gray-100 cursor-not-allowed" : ""
                             }`}
-                            disabled={disabled}
                         >
-                            <option value="CHF">CHF</option>
-                            <option value="EUR">EUR</option>
-                            <option value="USD">USD</option>
-                        </select>
+                            CHF
+                        </div>
                     )}
                     <input
                         type={currency ? "text" : type}

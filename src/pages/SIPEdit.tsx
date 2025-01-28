@@ -72,13 +72,13 @@ function SIPEdit() {
         numero: "1331,00",
         cp: "SAP/VIJ/COS/SND",
         dt: "BEN/REB/MOJ/MFA/DIG/JAC",
-        debutTravaux: "06-06-2017",
-        reception: "17-07-2020",
-        signatureContrat: "28-03-2017",
+        debutTravaux: "2017-06-06",
+        reception: "2020-07-17",
+        signatureContrat: "2017-03-28",
         assuranceRcTc: "La Bâloise",
-        validitePolice: "31-12-2020",
+        validitePolice: "2020-12-31",
         garantieBonneExecution: "Swiss Re",
-        validiteGarantie: "28-10-2021",
+        validiteGarantie: "2021-10-28",
         montantGarantie: "1.00",
         montantGarantieCurrency: "CHF",
         montantContratHT: "10.00",
@@ -293,7 +293,7 @@ function SIPEdit() {
                             label="Total = devis révisés (HT)"
                             name="totalDevisRevises"
                             value={totalDevisRevises().toFixed(2)}
-                            onChange={handleChange("totalDevisRevises")}
+                            onChange={() => {}}
                             disabled={true}
                             currency={{
                                 value: formData.avenantsPOSignesCurrency.toString(),
@@ -324,7 +324,7 @@ function SIPEdit() {
                             label="Coût prob./devis révisé (HT)"
                             name="totalCoutProbable"
                             value={coutProbableDevisRevise().toFixed(2)}
-                            onChange={handleChange("totalCoutProbable")}
+                            onChange={() => {}}
                             disabled={true}
                             currency={{
                                 value: formData.avenantsPOSignesCurrency.toString(),
@@ -370,7 +370,7 @@ function SIPEdit() {
                             label="Liquidité"
                             name="liquidite"
                             value={liquidite().toFixed(2)}
-                            onChange={handleChange("liquidite")}
+                            onChange={() => {}}
                             disabled={true}
                             currency={{
                                 value: formData.avenantsPOSignesCurrency.toString(),
@@ -435,7 +435,7 @@ function SIPEdit() {
                         />
                         <FormField
                             label="Devis acquér. facturés (HT)"
-                            name="devisAcquerFactures" 
+                            name="devisAcquerFactures"
                             value={formData.devisAcquerFactures}
                             onChange={handleChange("devisAcquerFactures")}
                             currency={{
@@ -444,7 +444,7 @@ function SIPEdit() {
                             }}
                         />
                         <FormField
-                            label="Devis acquéreurs signés (HT)" 
+                            label="Devis acquéreurs signés (HT)"
                             name="devisAcquereursSignes"
                             value={formData.devisAcquerFactures}
                             onChange={handleChange("devisAcquerFactures")}
@@ -454,7 +454,7 @@ function SIPEdit() {
                             }}
                         />
                         <FormField
-                            label="Devis acquéreurs payés (HT)" 
+                            label="Devis acquéreurs payés (HT)"
                             name="devisAcquereursPayes"
                             value={formData.devisAcquereursPayes}
                             onChange={handleChange("devisAcquereursPayes")}
@@ -468,8 +468,8 @@ function SIPEdit() {
                                 Avenants MO (modification projet)
                             </Title>
                         </div>
-                         <FormField
-                            label="Transmis, non validés (HT)" 
+                        <FormField
+                            label="Transmis, non validés (HT)"
                             name="transmisNonValides"
                             value={formData.transmisNonValides}
                             onChange={handleChange("transmisNonValides")}
@@ -479,7 +479,7 @@ function SIPEdit() {
                             }}
                         />
                         <FormField
-                            label="A transmettre, estimation (HT)" 
+                            label="A transmettre, estimation (HT)"
                             name="aTransmettreEstimation"
                             value={formData.aTransmettreEstimation}
                             onChange={handleChange("aTransmettreEstimation")}
@@ -488,19 +488,19 @@ function SIPEdit() {
                                 onCurrencyChange: (currency) => setFormData((prev) => ({ ...prev, totalDevisRevisesCurrency: currency })),
                             }}
                         />
-                         <div className="sm:col-span-6">
+                        <div className="sm:col-span-6">
                             <Title variant="h3" className="bg-[#FF6600] text-white text-center p-2">
                                 Adjudications
                             </Title>
                         </div>
                         <FormField
-                            label="CFC en cours d'ajudication" 
+                            label="CFC en cours d'ajudication"
                             name="cfcEnCoursAjudication"
                             value={formData.cfcEnCoursAjudication}
                             onChange={handleChange("cfcEnCoursAjudication")}
                         />
                         <FormField
-                            label="CFC en préparation" 
+                            label="CFC en préparation"
                             name="cfcEnPreparation"
                             value={formData.cfcEnPreparation}
                             onChange={handleChange("cfcEnPreparation")}
@@ -521,27 +521,22 @@ function SIPEdit() {
                             value={formData.delaisConformite}
                             options={[
                                 { label: "Conforme", value: "conforme" },
-                                { label: "Non conforme", value: "non conforme" }
+                                { label: "Non conforme", value: "non conforme" },
                             ]}
                             onChange={handleChange("delaisConformite")}
                             disabled={false}
                         />
-                         <RadioField
+                        <RadioField
                             name="securiteConformite"
                             value={formData.securiteConformite}
                             options={[
                                 { label: "Conforme", value: "conforme" },
-                                { label: "Non conforme", value: "non conforme" }
+                                { label: "Non conforme", value: "non conforme" },
                             ]}
                             onChange={handleChange("securiteConformite")}
                             disabled={false}
                         />
-                        <TextAreaField
-                            name="delaisCommentaire"
-                            value={formData.delaisCommentaire}
-                            onChange={handleChange("delaisCommentaire")}
-                            rows={4}
-                        />
+                        <TextAreaField name="delaisCommentaire" value={formData.delaisCommentaire} onChange={handleChange("delaisCommentaire")} rows={4} />
                         <TextAreaField
                             name="securiteCommentaire"
                             value={formData.securiteCommentaire}
