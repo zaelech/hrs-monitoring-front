@@ -1,6 +1,7 @@
 import { ChevronRight } from "lucide-react";
 import Prestataires from "../components/SIP/Prestataires";
-import { FormField } from "../components/common/FormField";
+import RessourcesHRS from "../components/SIP/RessourcesHRS";
+import { InputField } from "../components/common/InputField";
 import { RadioField } from "../components/common/RadioField";
 import { TextAreaField } from "../components/common/TextAreaField";
 import Title from "../components/common/Title";
@@ -9,8 +10,6 @@ import { useState } from "react";
 interface FormData {
     projet: string;
     numero: string;
-    cp: string;
-    dt: string;
     debutTravaux: string;
     reception: string;
     signatureContrat: string;
@@ -51,8 +50,6 @@ function SIPEdit() {
     const [formData, setFormData] = useState<FormData>({
         projet: "Aéroport - Aile Est - Bat 2",
         numero: "1331,00",
-        cp: "SAP/VIJ/COS/SND",
-        dt: "BEN/REB/MOJ/MFA/DIG/JAC",
         debutTravaux: "2017-06-06",
         reception: "2020-07-17",
         signatureContrat: "2017-03-28",
@@ -146,10 +143,17 @@ function SIPEdit() {
                                 Données de base
                             </Title>
                         </div>
-                        <FormField label="Projet" name="projet" value={formData.projet} onChange={handleChange("projet")} />
-                        <FormField label="No" name="numero" value={formData.numero} onChange={handleChange("numero")} />
-                        <FormField label="CP" name="cp" value={formData.cp} onChange={handleChange("cp")} />
-                        <FormField label="DT" name="dt" value={formData.dt} onChange={handleChange("dt")} />
+                        <InputField label="Projet" name="projet" value={formData.projet} onChange={handleChange("projet")} />
+                        <InputField label="No" name="numero" value={formData.numero} onChange={handleChange("numero")} />
+                        <div className="flex flex-col gap-2">
+                            <span className="font-medium">Ressources HRS</span>
+                            <button type="button" className="border-solid border-2 border-[#FF6600] text-[#FF6600] text-sm px-3 py-1 rounded w-fit">
+                                Ajouter
+                            </button>
+                        </div>
+                        <div className="sm:col-span-5">
+                            <RessourcesHRS />
+                        </div>
                         <div className="flex flex-col gap-2">
                             <span className="font-medium">Prestataires</span>
                             <button type="button" className="border-solid border-2 border-[#FF6600] text-[#FF6600] text-sm px-3 py-1 rounded w-fit">
@@ -159,44 +163,44 @@ function SIPEdit() {
                         <div className="sm:col-span-5">
                             <Prestataires />
                         </div>
-                        <FormField
+                        <InputField
                             label="Début travaux"
                             name="debutTravaux"
                             type="date"
                             value={formData.debutTravaux}
                             onChange={handleChange("debutTravaux")}
                         />
-                        <FormField label="Réception" name="reception" type="date" value={formData.reception} onChange={handleChange("reception")} />
-                        <FormField
+                        <InputField label="Réception" name="reception" type="date" value={formData.reception} onChange={handleChange("reception")} />
+                        <InputField
                             label="Signature contrat"
                             name="signatureContrat"
                             type="date"
                             value={formData.signatureContrat}
                             onChange={handleChange("signatureContrat")}
                         />
-                        <FormField label="Nb jrs" name="nbJours" value={nbJours().toString()} onChange={() => {}} disabled={true} />
-                        <FormField label="Assurance RC/TC" name="assuranceRcTc" value={formData.assuranceRcTc} onChange={handleChange("assuranceRcTc")} />
-                        <FormField
+                        <InputField label="Nb jrs" name="nbJours" value={nbJours().toString()} onChange={() => {}} disabled={true} />
+                        <InputField label="Assurance RC/TC" name="assuranceRcTc" value={formData.assuranceRcTc} onChange={handleChange("assuranceRcTc")} />
+                        <InputField
                             label="Validite police"
                             type="date"
                             name="validitePolice"
                             value={formData.validitePolice}
                             onChange={handleChange("validitePolice")}
                         />
-                        <FormField
+                        <InputField
                             label="Garantie bonne execution"
                             name="garantieBonneExecution"
                             value={formData.garantieBonneExecution}
                             onChange={handleChange("garantieBonneExecution")}
                         />
-                        <FormField
+                        <InputField
                             label="Validite garantie"
                             type="date"
                             name="validiteGarantie"
                             value={formData.validiteGarantie}
                             onChange={handleChange("validiteGarantie")}
                         />
-                        <FormField
+                        <InputField
                             label="Montant garantie"
                             name="montantGarantie"
                             value={formData.montantGarantie}
@@ -208,35 +212,35 @@ function SIPEdit() {
                                 Controlling
                             </Title>
                         </div>
-                        <FormField
+                        <InputField
                             label="Montant contrat (HT)"
                             name="montantContratHT"
                             value={formData.montantContratHT}
                             onChange={handleChange("montantContratHT")}
                             currency={true}
                         />
-                        <FormField
+                        <InputField
                             label="Honnoraires HRS"
                             name="honnorairesHRS"
                             value={formData.honnorairesHRS}
                             onChange={handleChange("honnorairesHRS")}
                             currency={true}
                         />
-                        <FormField
+                        <InputField
                             label="Avenants PO signes (HT)"
                             name="avenantsPOSignes"
                             value={formData.avenantsPOSignes}
                             onChange={handleChange("avenantsPOSignes")}
                             currency={true}
                         />
-                        <FormField
+                        <InputField
                             label="Honoraires DT externes"
                             name="honorairesDTExternes"
                             value={formData.honorairesDTExternes}
                             onChange={handleChange("honorairesDTExternes")}
                             currency={true}
                         />
-                        <FormField
+                        <InputField
                             label="Total = devis révisés (HT)"
                             name="totalDevisRevises"
                             value={totalDevisRevises().toFixed(2)}
@@ -244,21 +248,15 @@ function SIPEdit() {
                             disabled={true}
                             currency={true}
                         />
-                        <FormField
-                            label="RG HRS"
-                            name="rgHrs"
-                            value={formData.rgHrs}
-                            onChange={handleChange("rgHrs")}
-                            currency={true}
-                        />
-                        <FormField
+                        <InputField label="RG HRS" name="rgHrs" value={formData.rgHrs} onChange={handleChange("rgHrs")} currency={true} />
+                        <InputField
                             label="Cout probable Messerli"
                             name="coutProbableMesserli"
                             value={formData.coutProbableMesserli}
                             onChange={handleChange("coutProbableMesserli")}
                             currency={true}
                         />
-                        <FormField
+                        <InputField
                             label="Coût prob./devis révisé (HT)"
                             name="totalCoutProbable"
                             value={coutProbableDevisRevise().toFixed(2)}
@@ -271,36 +269,29 @@ function SIPEdit() {
                                 Liquidité
                             </Title>
                         </div>
-                        <FormField
+                        <InputField
                             label="Montant facturé au MO (HT)"
                             name="montantFactureAuMo"
                             value={formData.montantFactureAuMo}
                             onChange={handleChange("montantFactureAuMo")}
                             currency={true}
                         />
-                        <FormField
+                        <InputField
                             label="Paiements HRS"
                             name="paiementsHRS"
                             value={formData.paiementsHRS}
                             onChange={handleChange("paiementsHRS")}
                             currency={true}
                         />
-                        <FormField
+                        <InputField
                             label="Montant payé par MO (HT)"
                             name="montantPayeParMo"
                             value={formData.montantPayeParMo}
                             onChange={handleChange("montantPayeParMo")}
                             currency={true}
                         />
-                        <FormField
-                            label="Liquidité"
-                            name="liquidite"
-                            value={liquidite().toFixed(2)}
-                            onChange={() => {}}
-                            disabled={true}
-                            currency={true}
-                        />
-                        <FormField
+                        <InputField label="Liquidité" name="liquidite" value={liquidite().toFixed(2)} onChange={() => {}} disabled={true} currency={true} />
+                        <InputField
                             label="Retard paiement MO"
                             name="retardPaiementMO"
                             value={retardPaiementMO().toFixed(2)}
@@ -308,76 +299,74 @@ function SIPEdit() {
                             disabled={true}
                             currency={true}
                         />
-                        <FormField
+                        <InputField
                             label="Autres débiteurs (HT)"
                             name="autresDebiteurs"
                             value={formData.autresDebiteurs}
                             onChange={handleChange("autresDebiteurs")}
                             currency={true}
                         />
-                        
+
                         <div className="sm:col-span-6">
                             <Title variant="h3" className="bg-[#FF6600] text-white text-center p-2">
                                 Gestion PPE
                             </Title>
                         </div>
-                        <FormField
+                        <InputField
                             label="Etat des ventes"
                             name="etatDesVentes"
                             value={formData.etatDesVentes}
                             onChange={handleChange("etatDesVentes")}
                             currency={true}
                         />
-                        <FormField
+                        <InputField
                             label="sur"
                             name="etatDesVentesSur"
                             value={formData.etatDesVentesSur}
                             onChange={handleChange("etatDesVentesSur")}
                             currency={true}
                         />
-                        <FormField
+                        <InputField
                             label="Devis acquér. transmis. (HT)"
                             name="devisAcquerTransmis"
                             value={formData.devisAcquerTransmis}
                             onChange={handleChange("devisAcquerTransmis")}
                             currency={true}
                         />
-                        <FormField
+                        <InputField
                             label="Devis acquér. facturés (HT)"
                             name="devisAcquerFactures"
                             value={formData.devisAcquerFactures}
                             onChange={handleChange("devisAcquerFactures")}
                             currency={true}
                         />
-                        <FormField
+                        <InputField
                             label="Devis acquéreurs signés (HT)"
                             name="devisAcquereursSignes"
                             value={formData.devisAcquerFactures}
                             onChange={handleChange("devisAcquerFactures")}
                             currency={true}
-
                         />
-                        <FormField
+                        <InputField
                             label="Devis acquéreurs payés (HT)"
                             name="devisAcquereursPayes"
                             value={formData.devisAcquereursPayes}
                             onChange={handleChange("devisAcquereursPayes")}
                             currency={true}
-                            
                         />
                         <div className="sm:col-span-6">
                             <Title variant="h3" className="bg-[#FF6600] text-white text-center p-2">
                                 Avenants MO (modification projet)
                             </Title>
                         </div>
-                        <FormField
+                        <InputField
                             label="Transmis, non validés (HT)"
                             name="transmisNonValides"
                             value={formData.transmisNonValides}
                             onChange={handleChange("transmisNonValides")}
                             currency={true}
                         />
-                        <FormField
+                        <InputField
                             label="A transmettre, estimation (HT)"
                             name="aTransmettreEstimation"
                             value={formData.aTransmettreEstimation}
@@ -389,13 +378,13 @@ function SIPEdit() {
                                 Adjudications
                             </Title>
                         </div>
-                        <FormField
+                        <InputField
                             label="CFC en cours d'ajudication"
                             name="cfcEnCoursAjudication"
                             value={formData.cfcEnCoursAjudication}
                             onChange={handleChange("cfcEnCoursAjudication")}
                         />
-                        <FormField
+                        <InputField
                             label="CFC en préparation"
                             name="cfcEnPreparation"
                             value={formData.cfcEnPreparation}

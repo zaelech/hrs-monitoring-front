@@ -1,6 +1,6 @@
 import React from "react";
 
-interface FormFieldProps {
+interface InputFieldProps {
     label: string;
     name: string;
     value: string;
@@ -11,7 +11,7 @@ interface FormFieldProps {
     currency?: boolean;
 }
 
-export const FormField: React.FC<FormFieldProps> = ({ label, name, value, onChange, type = "text", placeholder, disabled = false, currency }) => {
+export const InputField: React.FC<InputFieldProps> = ({ label, name, value, onChange, type = "text", placeholder, disabled = false, currency }) => {
     const formatDecimal = (value: string) => {
         const numericValue = value.replace(/[^\d.]/g, "");
         const parts = numericValue.split(".");
