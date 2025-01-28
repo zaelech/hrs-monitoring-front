@@ -1,6 +1,8 @@
 import { ChevronRight } from "lucide-react";
 import Prestataires from "../components/SIP/Prestataires";
 import { FormField } from "../components/common/FormField";
+import { RadioField } from "../components/common/RadioField";
+import { TextAreaField } from "../components/common/TextAreaField";
 import Title from "../components/common/Title";
 import { useState } from "react";
 
@@ -38,6 +40,30 @@ interface FormData {
     montantPayeParMoCurrency: string;
     autresDebiteurs: string;
     autresDebiteursCurrency: string;
+    etatDesVentes: string;
+    etatDesVentesCurrency: string;
+    etatDesVentesSur: string;
+    etatDesVentesSurCurrency: string;
+    devisAcquerTransmis: string;
+    devisAcquerTransmisCurrency: string;
+    devisAcquerFactures: string;
+    devisAcquerFacturesCurrency: string;
+    devisAcquereursSignes: string;
+    devisAcquereursSignesCurrency: string;
+    devisAcquereursPayes: string;
+    devisAcquereursPayesCurrency: string;
+    transmisNonValides: string;
+    transmisNonValidesCurrency: string;
+    aTransmettreEstimation: string;
+    aTransmettreEstimationCurrency: string;
+    cfcEnCoursAjudication: string;
+    cfcEnPreparation: string;
+    delaisConformite: string;
+    delaisCommentaire: string;
+    securiteConformite: string;
+    securiteCommentaire: string;
+    planificationMandatairesCommentaire: string;
+    problemesSousTraitantsCommentaire: string;
 }
 
 function SIPEdit() {
@@ -46,35 +72,59 @@ function SIPEdit() {
         numero: "1331,00",
         cp: "SAP/VIJ/COS/SND",
         dt: "BEN/REB/MOJ/MFA/DIG/JAC",
-        debutTravaux: "2023-10-01",
-        reception: "2024-10-01",
-        signatureContrat: "2024-10-01",
+        debutTravaux: "06-06-2017",
+        reception: "17-07-2020",
+        signatureContrat: "28-03-2017",
         assuranceRcTc: "La Bâloise",
-        validitePolice: "2024-10-01",
+        validitePolice: "31-12-2020",
         garantieBonneExecution: "Swiss Re",
-        validiteGarantie: "2024-10-01",
-        montantGarantie: "1331.00",
+        validiteGarantie: "28-10-2021",
+        montantGarantie: "1.00",
         montantGarantieCurrency: "CHF",
-        montantContratHT: "1331.00",
+        montantContratHT: "10.00",
         montantContratHTCurrency: "CHF",
-        honnorairesHRS: "1331.00",
+        honnorairesHRS: "1.00",
         honnorairesHRCurrency: "CHF",
-        avenantsPOSignes: "1331.00",
+        avenantsPOSignes: "-5.00",
         avenantsPOSignesCurrency: "CHF",
-        honorairesDTExternes: "1331.00",
+        honorairesDTExternes: "0",
         honorairesDTExternesCurrency: "CHF",
-        rgHrs: "1331.00",
+        rgHrs: "1.00",
         rgHrsCurrency: "CHF",
-        coutProbableMesserli: "1331.00",
+        coutProbableMesserli: "11.00",
         coutProbableMesserliCurrency: "CHF",
-        montantFactureAuMo: "1331.00",
+        montantFactureAuMo: "3.00",
         montantFactureAuMoCurrency: "CHF",
-        paiementsHRS: "1331.00",
+        paiementsHRS: "1.00",
         paiementsHRSCurrency: "CHF",
-        montantPayeParMo: "1331.00",
+        montantPayeParMo: "2.00",
         montantPayeParMoCurrency: "CHF",
-        autresDebiteurs: "1331.00",
+        autresDebiteurs: "0",
         autresDebiteursCurrency: "CHF",
+        etatDesVentes: "0",
+        etatDesVentesCurrency: "CHF",
+        etatDesVentesSur: "1331.00",
+        etatDesVentesSurCurrency: "CHF",
+        devisAcquerTransmis: "1331.00",
+        devisAcquerTransmisCurrency: "CHF",
+        devisAcquerFactures: "1331.00",
+        devisAcquerFacturesCurrency: "CHF",
+        devisAcquereursSignes: "1331.00",
+        devisAcquereursSignesCurrency: "CHF",
+        devisAcquereursPayes: "1331.00",
+        devisAcquereursPayesCurrency: "CHF",
+        transmisNonValides: "2.00",
+        transmisNonValidesCurrency: "CHF",
+        aTransmettreEstimation: "6.00",
+        aTransmettreEstimationCurrency: "CHF",
+        cfcEnCoursAjudication: "Sous-faces, Serr. diverse, Doublage verre, Faux-planchers, Echafuadages",
+        cfcEnPreparation: "Monilier, Coupe feu, Plâtrerie, Faux-plafonds",
+        delaisConformite: "conforme",
+        delaisCommentaire: "",
+        securiteConformite: "conforme",
+        securiteCommentaire: "",
+        planificationMandatairesCommentaire: "",
+        problemesSousTraitantsCommentaire: "",
     });
 
     const nbJours = () => {
@@ -243,7 +293,7 @@ function SIPEdit() {
                             label="Total = devis révisés (HT)"
                             name="totalDevisRevises"
                             value={totalDevisRevises().toFixed(2)}
-                            onChange={() => {}}
+                            onChange={handleChange("totalDevisRevises")}
                             disabled={true}
                             currency={{
                                 value: formData.avenantsPOSignesCurrency.toString(),
@@ -274,7 +324,7 @@ function SIPEdit() {
                             label="Coût prob./devis révisé (HT)"
                             name="totalCoutProbable"
                             value={coutProbableDevisRevise().toFixed(2)}
-                            onChange={() => {}}
+                            onChange={handleChange("totalCoutProbable")}
                             disabled={true}
                             currency={{
                                 value: formData.avenantsPOSignesCurrency.toString(),
@@ -320,7 +370,7 @@ function SIPEdit() {
                             label="Liquidité"
                             name="liquidite"
                             value={liquidite().toFixed(2)}
-                            onChange={() => {}}
+                            onChange={handleChange("liquidite")}
                             disabled={true}
                             currency={{
                                 value: formData.avenantsPOSignesCurrency.toString(),
@@ -342,13 +392,189 @@ function SIPEdit() {
                             label="Autres débiteurs (HT)"
                             name="autresDebiteurs"
                             value={formData.autresDebiteurs}
-                            onChange={() => {}}
-                            disabled={true}
+                            onChange={handleChange("autresDebiteurs")}
                             currency={{
                                 value: formData.avenantsPOSignesCurrency.toString(),
                                 onCurrencyChange: (currency) => setFormData((prev) => ({ ...prev, totalDevisRevisesCurrency: currency })),
                             }}
                         />
+                        <div className="sm:col-span-6">
+                            <Title variant="h3" className="bg-[#FF6600] text-white text-center p-2">
+                                Gestion PPE
+                            </Title>
+                        </div>
+                        <FormField
+                            label="Etat des ventes"
+                            name="etatDesVentes"
+                            value={formData.etatDesVentes}
+                            onChange={handleChange("etatDesVentes")}
+                            currency={{
+                                value: formData.etatDesVentesCurrency.toString(),
+                                onCurrencyChange: (currency) => setFormData((prev) => ({ ...prev, totalDevisRevisesCurrency: currency })),
+                            }}
+                        />
+                        <FormField
+                            label="sur"
+                            name="etatDesVentesSur"
+                            value={formData.etatDesVentesSur}
+                            onChange={handleChange("etatDesVentesSur")}
+                            currency={{
+                                value: formData.etatDesVentesSurCurrency.toString(),
+                                onCurrencyChange: (currency) => setFormData((prev) => ({ ...prev, totalDevisRevisesCurrency: currency })),
+                            }}
+                        />
+                        <FormField
+                            label="Devis acquér. transmis. (HT)"
+                            name="devisAcquerTransmis"
+                            value={formData.devisAcquerTransmis}
+                            onChange={handleChange("devisAcquerTransmis")}
+                            currency={{
+                                value: formData.devisAcquerTransmisCurrency.toString(),
+                                onCurrencyChange: (currency) => setFormData((prev) => ({ ...prev, totalDevisRevisesCurrency: currency })),
+                            }}
+                        />
+                        <FormField
+                            label="Devis acquér. facturés (HT)"
+                            name="devisAcquerFactures" 
+                            value={formData.devisAcquerFactures}
+                            onChange={handleChange("devisAcquerFactures")}
+                            currency={{
+                                value: formData.devisAcquerFacturesCurrency.toString(),
+                                onCurrencyChange: (currency) => setFormData((prev) => ({ ...prev, totalDevisRevisesCurrency: currency })),
+                            }}
+                        />
+                        <FormField
+                            label="Devis acquéreurs signés (HT)" 
+                            name="devisAcquereursSignes"
+                            value={formData.devisAcquerFactures}
+                            onChange={handleChange("devisAcquerFactures")}
+                            currency={{
+                                value: formData.devisAcquerFacturesCurrency.toString(),
+                                onCurrencyChange: (currency) => setFormData((prev) => ({ ...prev, totalDevisRevisesCurrency: currency })),
+                            }}
+                        />
+                        <FormField
+                            label="Devis acquéreurs payés (HT)" 
+                            name="devisAcquereursPayes"
+                            value={formData.devisAcquereursPayes}
+                            onChange={handleChange("devisAcquereursPayes")}
+                            currency={{
+                                value: formData.devisAcquereursPayesCurrency.toString(),
+                                onCurrencyChange: (currency) => setFormData((prev) => ({ ...prev, totalDevisRevisesCurrency: currency })),
+                            }}
+                        />
+                        <div className="sm:col-span-6">
+                            <Title variant="h3" className="bg-[#FF6600] text-white text-center p-2">
+                                Avenants MO (modification projet)
+                            </Title>
+                        </div>
+                         <FormField
+                            label="Transmis, non validés (HT)" 
+                            name="transmisNonValides"
+                            value={formData.transmisNonValides}
+                            onChange={handleChange("transmisNonValides")}
+                            currency={{
+                                value: formData.transmisNonValidesCurrency.toString(),
+                                onCurrencyChange: (currency) => setFormData((prev) => ({ ...prev, totalDevisRevisesCurrency: currency })),
+                            }}
+                        />
+                        <FormField
+                            label="A transmettre, estimation (HT)" 
+                            name="aTransmettreEstimation"
+                            value={formData.aTransmettreEstimation}
+                            onChange={handleChange("aTransmettreEstimation")}
+                            currency={{
+                                value: formData.aTransmettreEstimationCurrency.toString(),
+                                onCurrencyChange: (currency) => setFormData((prev) => ({ ...prev, totalDevisRevisesCurrency: currency })),
+                            }}
+                        />
+                         <div className="sm:col-span-6">
+                            <Title variant="h3" className="bg-[#FF6600] text-white text-center p-2">
+                                Adjudications
+                            </Title>
+                        </div>
+                        <FormField
+                            label="CFC en cours d'ajudication" 
+                            name="cfcEnCoursAjudication"
+                            value={formData.cfcEnCoursAjudication}
+                            onChange={handleChange("cfcEnCoursAjudication")}
+                        />
+                        <FormField
+                            label="CFC en préparation" 
+                            name="cfcEnPreparation"
+                            value={formData.cfcEnPreparation}
+                            onChange={handleChange("cfcEnPreparation")}
+                        />
+                        <div className="sm:col-span-3">
+                            <Title variant="h3" className="bg-[#FF6600] text-white text-center p-2">
+                                Délais
+                            </Title>
+                        </div>
+
+                        <div className="sm:col-span-3">
+                            <Title variant="h3" className="bg-[#FF6600] text-white text-center p-2">
+                                Sécurité
+                            </Title>
+                        </div>
+                        <RadioField
+                            name="delaisConformite"
+                            value={formData.delaisConformite}
+                            options={[
+                                { label: "Conforme", value: "conforme" },
+                                { label: "Non conforme", value: "non conforme" }
+                            ]}
+                            onChange={handleChange("delaisConformite")}
+                            disabled={false}
+                        />
+                         <RadioField
+                            name="securiteConformite"
+                            value={formData.securiteConformite}
+                            options={[
+                                { label: "Conforme", value: "conforme" },
+                                { label: "Non conforme", value: "non conforme" }
+                            ]}
+                            onChange={handleChange("securiteConformite")}
+                            disabled={false}
+                        />
+                        <TextAreaField
+                            name="delaisCommentaire"
+                            value={formData.delaisCommentaire}
+                            onChange={handleChange("delaisCommentaire")}
+                            rows={4}
+                        />
+                        <TextAreaField
+                            name="securiteCommentaire"
+                            value={formData.securiteCommentaire}
+                            onChange={handleChange("securiteCommentaire")}
+                            rows={4}
+                        />
+                        <div className="sm:col-span-3">
+                            <Title variant="h3" className="bg-[#FF6600] text-white text-center p-2">
+                                Planification mandataires
+                            </Title>
+                        </div>
+                        <div className="sm:col-span-3">
+                            <Title variant="h3" className="bg-[#FF6600] text-white text-center p-2">
+                                Problèmes sous-traitants
+                            </Title>
+                        </div>
+                        <TextAreaField
+                            name="planificationMandatairesCommentaire"
+                            value={formData.planificationMandatairesCommentaire}
+                            onChange={handleChange("planificationMandatairesCommentaire")}
+                            rows={4}
+                        />
+                        <TextAreaField
+                            name="problemesSousTraitantsCommentaire"
+                            value={formData.problemesSousTraitantsCommentaire}
+                            onChange={handleChange("problemesSousTraitantsCommentaire")}
+                            rows={4}
+                        />
+                        <div className="sm:col-span-6">
+                            <Title variant="h3" className="bg-[#FF6600] text-white text-center p-2">
+                                Annexes
+                            </Title>
+                        </div>
                     </div>
                 </div>
             </form>
