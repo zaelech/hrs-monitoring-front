@@ -19,43 +19,24 @@ interface FormData {
     garantieBonneExecution: string;
     validiteGarantie: string;
     montantGarantie: string;
-    montantGarantieCurrency: string;
     montantContratHT: string;
-    montantContratHTCurrency: string;
     honnorairesHRS: string;
-    honnorairesHRCurrency: string;
     avenantsPOSignes: string;
-    avenantsPOSignesCurrency: string;
     honorairesDTExternes: string;
-    honorairesDTExternesCurrency: string;
     rgHrs: string;
-    rgHrsCurrency: string;
     coutProbableMesserli: string;
-    coutProbableMesserliCurrency: string;
     montantFactureAuMo: string;
-    montantFactureAuMoCurrency: string;
     paiementsHRS: string;
-    paiementsHRSCurrency: string;
     montantPayeParMo: string;
-    montantPayeParMoCurrency: string;
     autresDebiteurs: string;
-    autresDebiteursCurrency: string;
     etatDesVentes: string;
-    etatDesVentesCurrency: string;
     etatDesVentesSur: string;
-    etatDesVentesSurCurrency: string;
     devisAcquerTransmis: string;
-    devisAcquerTransmisCurrency: string;
     devisAcquerFactures: string;
-    devisAcquerFacturesCurrency: string;
     devisAcquereursSignes: string;
-    devisAcquereursSignesCurrency: string;
     devisAcquereursPayes: string;
-    devisAcquereursPayesCurrency: string;
     transmisNonValides: string;
-    transmisNonValidesCurrency: string;
     aTransmettreEstimation: string;
-    aTransmettreEstimationCurrency: string;
     cfcEnCoursAjudication: string;
     cfcEnPreparation: string;
     delaisConformite: string;
@@ -80,43 +61,24 @@ function SIPEdit() {
         garantieBonneExecution: "Swiss Re",
         validiteGarantie: "2021-10-28",
         montantGarantie: "1.00",
-        montantGarantieCurrency: "CHF",
         montantContratHT: "10.00",
-        montantContratHTCurrency: "CHF",
         honnorairesHRS: "1.00",
-        honnorairesHRCurrency: "CHF",
         avenantsPOSignes: "-5.00",
-        avenantsPOSignesCurrency: "CHF",
         honorairesDTExternes: "0",
-        honorairesDTExternesCurrency: "CHF",
         rgHrs: "1.00",
-        rgHrsCurrency: "CHF",
         coutProbableMesserli: "11.00",
-        coutProbableMesserliCurrency: "CHF",
         montantFactureAuMo: "3.00",
-        montantFactureAuMoCurrency: "CHF",
         paiementsHRS: "1.00",
-        paiementsHRSCurrency: "CHF",
         montantPayeParMo: "2.00",
-        montantPayeParMoCurrency: "CHF",
         autresDebiteurs: "0",
-        autresDebiteursCurrency: "CHF",
         etatDesVentes: "0",
-        etatDesVentesCurrency: "CHF",
         etatDesVentesSur: "1331.00",
-        etatDesVentesSurCurrency: "CHF",
         devisAcquerTransmis: "1331.00",
-        devisAcquerTransmisCurrency: "CHF",
         devisAcquerFactures: "1331.00",
-        devisAcquerFacturesCurrency: "CHF",
         devisAcquereursSignes: "1331.00",
-        devisAcquereursSignesCurrency: "CHF",
         devisAcquereursPayes: "1331.00",
-        devisAcquereursPayesCurrency: "CHF",
         transmisNonValides: "2.00",
-        transmisNonValidesCurrency: "CHF",
         aTransmettreEstimation: "6.00",
-        aTransmettreEstimationCurrency: "CHF",
         cfcEnCoursAjudication: "Sous-faces, Serr. diverse, Doublage verre, Faux-planchers, Echafuadages",
         cfcEnPreparation: "Monilier, Coupe feu, Plâtrerie, Faux-plafonds",
         delaisConformite: "conforme",
@@ -239,10 +201,7 @@ function SIPEdit() {
                             name="montantGarantie"
                             value={formData.montantGarantie}
                             onChange={handleChange("montantGarantie")}
-                            currency={{
-                                value: formData.montantGarantieCurrency,
-                                onCurrencyChange: (currency) => setFormData((prev) => ({ ...prev, montantGarantieCurrency: currency })),
-                            }}
+                            currency={true}
                         />
                         <div className="sm:col-span-6">
                             <Title variant="h3" className="bg-[#FF6600] text-white text-center p-2">
@@ -254,40 +213,28 @@ function SIPEdit() {
                             name="montantContratHT"
                             value={formData.montantContratHT}
                             onChange={handleChange("montantContratHT")}
-                            currency={{
-                                value: formData.montantContratHTCurrency,
-                                onCurrencyChange: (currency) => setFormData((prev) => ({ ...prev, montantContratHTCurrency: currency })),
-                            }}
+                            currency={true}
                         />
                         <FormField
                             label="Honnoraires HRS"
                             name="honnorairesHRS"
                             value={formData.honnorairesHRS}
                             onChange={handleChange("honnorairesHRS")}
-                            currency={{
-                                value: formData.honnorairesHRCurrency,
-                                onCurrencyChange: (currency) => setFormData((prev) => ({ ...prev, honnorairesHRCurrency: currency })),
-                            }}
+                            currency={true}
                         />
                         <FormField
                             label="Avenants PO signes (HT)"
                             name="avenantsPOSignes"
                             value={formData.avenantsPOSignes}
                             onChange={handleChange("avenantsPOSignes")}
-                            currency={{
-                                value: formData.avenantsPOSignesCurrency,
-                                onCurrencyChange: (currency) => setFormData((prev) => ({ ...prev, avenantsPOSignesCurrency: currency })),
-                            }}
+                            currency={true}
                         />
                         <FormField
                             label="Honoraires DT externes"
                             name="honorairesDTExternes"
                             value={formData.honorairesDTExternes}
                             onChange={handleChange("honorairesDTExternes")}
-                            currency={{
-                                value: formData.honorairesDTExternesCurrency,
-                                onCurrencyChange: (currency) => setFormData((prev) => ({ ...prev, honorairesDTExternesCurrency: currency })),
-                            }}
+                            currency={true}
                         />
                         <FormField
                             label="Total = devis révisés (HT)"
@@ -295,30 +242,21 @@ function SIPEdit() {
                             value={totalDevisRevises().toFixed(2)}
                             onChange={() => {}}
                             disabled={true}
-                            currency={{
-                                value: formData.avenantsPOSignesCurrency.toString(),
-                                onCurrencyChange: (currency) => setFormData((prev) => ({ ...prev, totalDevisRevisesCurrency: currency })),
-                            }}
+                            currency={true}
                         />
                         <FormField
                             label="RG HRS"
                             name="rgHrs"
                             value={formData.rgHrs}
                             onChange={handleChange("rgHrs")}
-                            currency={{
-                                value: formData.rgHrsCurrency,
-                                onCurrencyChange: (currency) => setFormData((prev) => ({ ...prev, rgHrsCurrency: currency })),
-                            }}
+                            currency={true}
                         />
                         <FormField
                             label="Cout probable Messerli"
                             name="coutProbableMesserli"
                             value={formData.coutProbableMesserli}
                             onChange={handleChange("coutProbableMesserli")}
-                            currency={{
-                                value: formData.coutProbableMesserliCurrency,
-                                onCurrencyChange: (currency) => setFormData((prev) => ({ ...prev, coutProbableMesserliCurrency: currency })),
-                            }}
+                            currency={true}
                         />
                         <FormField
                             label="Coût prob./devis révisé (HT)"
@@ -326,10 +264,7 @@ function SIPEdit() {
                             value={coutProbableDevisRevise().toFixed(2)}
                             onChange={() => {}}
                             disabled={true}
-                            currency={{
-                                value: formData.avenantsPOSignesCurrency.toString(),
-                                onCurrencyChange: (currency) => setFormData((prev) => ({ ...prev, totalDevisRevisesCurrency: currency })),
-                            }}
+                            currency={true}
                         />
                         <div className="sm:col-span-6">
                             <Title variant="h3" className="bg-[#FF6600] text-white text-center p-2">
@@ -341,30 +276,21 @@ function SIPEdit() {
                             name="montantFactureAuMo"
                             value={formData.montantFactureAuMo}
                             onChange={handleChange("montantFactureAuMo")}
-                            currency={{
-                                value: formData.montantFactureAuMoCurrency,
-                                onCurrencyChange: (currency) => setFormData((prev) => ({ ...prev, montantFactureAuMoCurrency: currency })),
-                            }}
+                            currency={true}
                         />
                         <FormField
                             label="Paiements HRS"
                             name="paiementsHRS"
                             value={formData.paiementsHRS}
                             onChange={handleChange("paiementsHRS")}
-                            currency={{
-                                value: formData.paiementsHRSCurrency,
-                                onCurrencyChange: (currency) => setFormData((prev) => ({ ...prev, paiementsHRSCurrency: currency })),
-                            }}
+                            currency={true}
                         />
                         <FormField
                             label="Montant payé par MO (HT)"
                             name="montantPayeParMo"
                             value={formData.montantPayeParMo}
                             onChange={handleChange("montantPayeParMo")}
-                            currency={{
-                                value: formData.montantPayeParMoCurrency,
-                                onCurrencyChange: (currency) => setFormData((prev) => ({ ...prev, montantPayeParMoCurrency: currency })),
-                            }}
+                            currency={true}
                         />
                         <FormField
                             label="Liquidité"
@@ -372,10 +298,7 @@ function SIPEdit() {
                             value={liquidite().toFixed(2)}
                             onChange={() => {}}
                             disabled={true}
-                            currency={{
-                                value: formData.avenantsPOSignesCurrency.toString(),
-                                onCurrencyChange: (currency) => setFormData((prev) => ({ ...prev, totalDevisRevisesCurrency: currency })),
-                            }}
+                            currency={true}
                         />
                         <FormField
                             label="Retard paiement MO"
@@ -383,21 +306,16 @@ function SIPEdit() {
                             value={retardPaiementMO().toFixed(2)}
                             onChange={() => {}}
                             disabled={true}
-                            currency={{
-                                value: formData.avenantsPOSignesCurrency.toString(),
-                                onCurrencyChange: (currency) => setFormData((prev) => ({ ...prev, totalDevisRevisesCurrency: currency })),
-                            }}
+                            currency={true}
                         />
                         <FormField
                             label="Autres débiteurs (HT)"
                             name="autresDebiteurs"
                             value={formData.autresDebiteurs}
                             onChange={handleChange("autresDebiteurs")}
-                            currency={{
-                                value: formData.avenantsPOSignesCurrency.toString(),
-                                onCurrencyChange: (currency) => setFormData((prev) => ({ ...prev, totalDevisRevisesCurrency: currency })),
-                            }}
+                            currency={true}
                         />
+                        
                         <div className="sm:col-span-6">
                             <Title variant="h3" className="bg-[#FF6600] text-white text-center p-2">
                                 Gestion PPE
@@ -408,60 +326,44 @@ function SIPEdit() {
                             name="etatDesVentes"
                             value={formData.etatDesVentes}
                             onChange={handleChange("etatDesVentes")}
-                            currency={{
-                                value: formData.etatDesVentesCurrency.toString(),
-                                onCurrencyChange: (currency) => setFormData((prev) => ({ ...prev, totalDevisRevisesCurrency: currency })),
-                            }}
+                            currency={true}
                         />
                         <FormField
                             label="sur"
                             name="etatDesVentesSur"
                             value={formData.etatDesVentesSur}
                             onChange={handleChange("etatDesVentesSur")}
-                            currency={{
-                                value: formData.etatDesVentesSurCurrency.toString(),
-                                onCurrencyChange: (currency) => setFormData((prev) => ({ ...prev, totalDevisRevisesCurrency: currency })),
-                            }}
+                            currency={true}
                         />
                         <FormField
                             label="Devis acquér. transmis. (HT)"
                             name="devisAcquerTransmis"
                             value={formData.devisAcquerTransmis}
                             onChange={handleChange("devisAcquerTransmis")}
-                            currency={{
-                                value: formData.devisAcquerTransmisCurrency.toString(),
-                                onCurrencyChange: (currency) => setFormData((prev) => ({ ...prev, totalDevisRevisesCurrency: currency })),
-                            }}
+                            currency={true}
                         />
                         <FormField
                             label="Devis acquér. facturés (HT)"
                             name="devisAcquerFactures"
                             value={formData.devisAcquerFactures}
                             onChange={handleChange("devisAcquerFactures")}
-                            currency={{
-                                value: formData.devisAcquerFacturesCurrency.toString(),
-                                onCurrencyChange: (currency) => setFormData((prev) => ({ ...prev, totalDevisRevisesCurrency: currency })),
-                            }}
+                            currency={true}
                         />
                         <FormField
                             label="Devis acquéreurs signés (HT)"
                             name="devisAcquereursSignes"
                             value={formData.devisAcquerFactures}
                             onChange={handleChange("devisAcquerFactures")}
-                            currency={{
-                                value: formData.devisAcquerFacturesCurrency.toString(),
-                                onCurrencyChange: (currency) => setFormData((prev) => ({ ...prev, totalDevisRevisesCurrency: currency })),
-                            }}
+                            currency={true}
+
                         />
                         <FormField
                             label="Devis acquéreurs payés (HT)"
                             name="devisAcquereursPayes"
                             value={formData.devisAcquereursPayes}
                             onChange={handleChange("devisAcquereursPayes")}
-                            currency={{
-                                value: formData.devisAcquereursPayesCurrency.toString(),
-                                onCurrencyChange: (currency) => setFormData((prev) => ({ ...prev, totalDevisRevisesCurrency: currency })),
-                            }}
+                            currency={true}
+                            
                         />
                         <div className="sm:col-span-6">
                             <Title variant="h3" className="bg-[#FF6600] text-white text-center p-2">
@@ -473,20 +375,14 @@ function SIPEdit() {
                             name="transmisNonValides"
                             value={formData.transmisNonValides}
                             onChange={handleChange("transmisNonValides")}
-                            currency={{
-                                value: formData.transmisNonValidesCurrency.toString(),
-                                onCurrencyChange: (currency) => setFormData((prev) => ({ ...prev, totalDevisRevisesCurrency: currency })),
-                            }}
+                            currency={true}
                         />
                         <FormField
                             label="A transmettre, estimation (HT)"
                             name="aTransmettreEstimation"
                             value={formData.aTransmettreEstimation}
                             onChange={handleChange("aTransmettreEstimation")}
-                            currency={{
-                                value: formData.aTransmettreEstimationCurrency.toString(),
-                                onCurrencyChange: (currency) => setFormData((prev) => ({ ...prev, totalDevisRevisesCurrency: currency })),
-                            }}
+                            currency={true}
                         />
                         <div className="sm:col-span-6">
                             <Title variant="h3" className="bg-[#FF6600] text-white text-center p-2">

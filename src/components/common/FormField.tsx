@@ -8,10 +8,7 @@ interface FormFieldProps {
     type?: string;
     placeholder?: string;
     disabled?: boolean;
-    currency?: {
-        value: string;
-        onCurrencyChange: (currency: string) => void;
-    };
+    currency?: boolean;
 }
 
 export const FormField: React.FC<FormFieldProps> = ({ label, name, value, onChange, type = "text", placeholder, disabled = false, currency }) => {
