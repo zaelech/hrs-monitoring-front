@@ -1,3 +1,4 @@
+"use client";
 import { ChevronRight } from "lucide-react";
 import Prestataires from "@/components/SIP/Prestataires";
 import RessourcesHRS from "@/components/SIP/RessourcesHRS";
@@ -143,8 +144,8 @@ function SIPEdit() {
                                 Données de base
                             </Title>
                         </div>
-                        <InputField label="Projet" name="projet" value={formData.projet} onChange={handleChange("projet")} />
-                        <InputField label="No" name="numero" value={formData.numero} onChange={handleChange("numero")} />
+                        <InputField label="Projet" name="projet" value={formData.projet} onChange={() => {}} disabled={true} />
+                        <InputField label="No" name="numero" value={formData.numero} onChange={() => {}} disabled={true} />
                         <div className="flex flex-col gap-2">
                             <span className="font-medium">Ressources HRS</span>
                             <button type="button" className="border-solid border-2 border-[#FF6600] text-[#FF6600] text-sm px-3 py-1 rounded w-fit">

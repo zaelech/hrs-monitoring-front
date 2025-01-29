@@ -1,3 +1,6 @@
+"use client";
+import React from "react";
+import { Fragment } from "react";
 interface Prestataire {
     label: string;
     value: string;
@@ -34,14 +37,16 @@ function Prestataires() {
     return (
         <div className="grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-6">
             {prestataires.map((prestataire, index) => (
-                <>
-                    <div key={`label-${index}`} className="sm:col-span-1 content-center">
+                <Fragment key={prestataire.label}>
+                    {" "}
+                    {/* On utilise label comme clé car il semble unique */}
+                    <div className="sm:col-span-1 content-center">
                         <span className="block text-sm font-medium leading-6 text-gray-900">{prestataire.label}</span>
                     </div>
-                    <div key={`value-${index}`} className="sm:col-span-2">
+                    <div className="sm:col-span-2">
                         <span className="block text-sm text-gray-900">{prestataire.value}</span>
                     </div>
-                </>
+                </Fragment>
             ))}
         </div>
     );
