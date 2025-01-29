@@ -5,6 +5,7 @@ import RessourcesHRS from "@/components/SIP/RessourcesHRS";
 import { InputField } from "@/components/common/InputField";
 import { RadioField } from "@/components/common/RadioField";
 import { TextAreaField } from "@/components/common/TextAreaField";
+import { SelectField } from "@/components/common/SelectField";
 import Title from "@/components/common/Title";
 import { useState } from "react";
 
