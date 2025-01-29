@@ -60,27 +60,9 @@ function ProjectEdit() {
                                 Projet
                             </Title>
                         </div>
-                        <InputField
-                            label="Numéro"
-                            name="numero"
-                            type="text"
-                            value={formData.numero}
-                            onChange={handleChange("numero")}
-                        />
-                        <InputField
-                            label="Localité"
-                            name="localite"
-                            type="text"
-                            value={formData.localite}
-                            onChange={handleChange("localite")}
-                        />
-                        <InputField
-                            label="Parcelle"
-                            name="parcelle"
-                            type="text"
-                            value={formData.parcelle}
-                            onChange={handleChange("parcelle")}
-                        />
+                        <InputField label="Numéro" name="numero" type="text" value={formData.numero} onChange={handleChange("numero")} />
+                        <InputField label="Localité" name="localite" type="text" value={formData.localite} onChange={handleChange("localite")} />
+                        <InputField label="Parcelle" name="parcelle" type="text" value={formData.parcelle} onChange={handleChange("parcelle")} />
                         <div className="sm:col-span-6">
                             <Title variant="h3" className="bg-[#FF6600] text-white text-center p-2">
                                 Sous-projets
@@ -93,13 +75,7 @@ function ProjectEdit() {
                             value={formData.numeroSousProjet}
                             onChange={handleChange("numeroSousProjet")}
                         />
-                        <InputField
-                            label="MO"
-                            name="mo"
-                            type="text"
-                            value={formData.mo}
-                            onChange={handleChange("mo")}
-                        />
+                        <InputField label="MO" name="mo" type="text" value={formData.mo} onChange={handleChange("mo")} />
                         <InputField
                             label="Assurance RCTC_Assureur"
                             name="assuranceRctcAssureur"
@@ -134,6 +110,17 @@ function ProjectEdit() {
                             type="text"
                             value={formData.garantieBeEcheance}
                             onChange={handleChange("garantieBeEcheance")}
+                        />
+                        <SelectField
+                            label="Mon sélecteur"
+                            name="monSelect"
+                            value={valeurSelectionnee}
+                            onChange={(value) => setValeurSelectionnee(value)}
+                            options={[
+                                { value: "option1", label: "Option 1" },
+                                { value: "option2", label: "Option 2" },
+                            ]}
+                            placeholder="Sélectionnez une option"
                         />
                     </div>
                 </div>
