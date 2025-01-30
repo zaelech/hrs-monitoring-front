@@ -20,6 +20,9 @@ interface FormData {
     garantieBeEntite: string;
     garantieBeMontant: string;
     garantieBeEcheance: string;
+    type: string;
+    remuneration: string;
+    ppe: string;
 }
 
 function ProjectEdit() {
@@ -34,6 +37,9 @@ function ProjectEdit() {
         garantieBeEntite: "1021",
         garantieBeMontant: "1021",
         garantieBeEcheance: "1021",
+        type: "1021",
+        remuneration: "1021",
+        ppe: "1021",
     });
 
     const handleChange = (field: keyof FormData) => (value: string) => {
@@ -83,6 +89,41 @@ function ProjectEdit() {
                             value={formData.assuranceRctcAssureur}
                             onChange={handleChange("assuranceRctcAssureur")}
                         />
+                        <SelectField
+                            label="Type"
+                            name="type"
+                            value={formData.type}
+                            onChange={(value) => setFormData({ ...formData, type: value })}
+                            options={[
+                                { value: "EG", label: "EG" },
+                                { value: "ET", label: "ET" },
+                                { value: "DT", label: "DT" },
+                            ]}
+                            placeholder="Sélectionnez une option"
+                        />
+                        <SelectField
+                            label="Rémunération"
+                            name="remuneration"
+                            value={formData.remuneration}
+                            onChange={(value) => setFormData({ ...formData, remuneration: value })}
+                            options={[
+                                { value: "Forfait", label: "Forfait" },
+                                { value: "Coût plafond", label: "Coût plafond" },
+                                { value: "Livre ouvert", label: "Livre ouvert" },
+                            ]}
+                            placeholder="Sélectionnez une option"
+                        />
+                        <SelectField
+                            label="PPE"
+                            name="ppe"
+                            value={formData.ppe}
+                            onChange={(value) => setFormData({ ...formData, ppe: value })}
+                            options={[
+                                { value: "PPE tiers", label: "PPE tiers" },
+                                { value: "PPE promo", label: "PPE promo" }
+                            ]}
+                            placeholder="Sélectionnez une option"
+                        />
                         <InputField
                             label="Assurance RCTC_Echeance"
                             name="assuranceRctcEcheance"
@@ -111,17 +152,7 @@ function ProjectEdit() {
                             value={formData.garantieBeEcheance}
                             onChange={handleChange("garantieBeEcheance")}
                         />
-                        <SelectField
-                            label="Mon sélecteur"
-                            name="monSelect"
-                            value={valeurSelectionnee}
-                            onChange={(value) => setValeurSelectionnee(value)}
-                            options={[
-                                { value: "option1", label: "Option 1" },
-                                { value: "option2", label: "Option 2" },
-                            ]}
-                            placeholder="Sélectionnez une option"
-                        />
+                   
                     </div>
                 </div>
             </form>
