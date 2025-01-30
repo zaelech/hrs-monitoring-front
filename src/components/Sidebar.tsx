@@ -5,6 +5,10 @@ interface MenuItem {
   items?: string[]
 }
 
+interface SidebarProps {
+  lng: string;
+}
+
 const menuItems: MenuItem[] = [
   {
     title: 'Project',
@@ -24,7 +28,7 @@ const menuItems: MenuItem[] = [
   }
 ]
 
-const Sidebar = () => {
+const Sidebar = ({ lng }: SidebarProps) => {
   return (
     <div className="w-64 bg-white border-r border-gray-200 h-screen fixed left-0 top-12">
       <nav className="p-4 space-y-2">

@@ -1,4 +1,8 @@
-const Header = () => {
+interface HeaderProps {
+  lng: string;
+}
+
+const Header = ({ lng }: HeaderProps) => {
   return (
     <header className="h-12 bg-[#FF6600] fixed top-0 left-0 right-0 z-50 flex items-center px-4">
       <svg 
