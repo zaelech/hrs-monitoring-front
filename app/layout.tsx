@@ -13,7 +13,7 @@ export async function generateStaticParams() {
 
 export default function RootLayout({ children, params: { lng } }: { children: React.ReactNode; params: { lng: string } }) {
     return (
-        <html lang={lng} dir={dir(lng)}>
+        <html lang={lng}>
             <body className={inter.className}>
                 <div className="min-h-screen bg-gray-50/50">
                     <Header lng={lng} />

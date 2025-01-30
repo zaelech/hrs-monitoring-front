@@ -1,4 +1,4 @@
-export const languages = ["fr", "it", "de"];
+export const languages = ["fr", "it", "de", "en"];
 export const defaultLanguage = "fr";
 
 export function getOptions(lng = defaultLanguage) {
