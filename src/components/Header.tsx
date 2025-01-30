@@ -1,4 +1,5 @@
-import { useTranslation } from "next-i18next";
+"use client";
+import { useTranslation } from "@/../app/i18n/client";
 import LanguageSwitcher from "./LanguageSwitcher";
 
 interface HeaderProps {
@@ -6,6 +7,8 @@ interface HeaderProps {
 }
 
 const Header = ({ lng }: HeaderProps) => {
+    const { t } = useTranslation(lng, "common");
+
     return (
         <header className="h-12 bg-[#FF6600] fixed top-0 left-0 right-0 z-50 flex items-center px-4">
             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 654.5 453.1" className="h-6">
@@ -15,7 +18,7 @@ const Header = ({ lng }: HeaderProps) => {
                     <path d="M415.9,214.4v-13.8c0-39.8-32.2-72-72-72H220.1v6.9v188.9h85.8v-110L415.9,214.4L415.9,214.4z"></path>
                 </g>
             </svg>
-            <h1 className="ml-4 text-white font-medium">Monitoring de Projet</h1>
+            <h1 className="ml-4 text-white font-medium">{t("title")}</h1>
             <LanguageSwitcher lng={lng} />
         </header>
     );
