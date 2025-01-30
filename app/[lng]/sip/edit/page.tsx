@@ -8,6 +8,13 @@ import { TextAreaField } from "@/components/common/TextAreaField";
 import { SelectField } from "@/components/common/SelectField";
 import Title from "@/components/common/Title";
 import { useState } from "react";
+import { useTranslation } from "@/../app/i18n/client";
+
+interface PageProps {
+    params: {
+        lng: string;
+    };
+}
 
 interface FormData {
     projet: string;
@@ -48,7 +55,8 @@ interface FormData {
     problemesSousTraitantsCommentaire: string;
 }
 
-function SIPEdit() {
+function SIPEdit({ params: { lng } }: PageProps) {
+    const { t } = useTranslation(lng, "sip");
     const [formData, setFormData] = useState<FormData>({
         projet: "Aéroport - Aile Est - Bat 2",
         numero: "1331,00",
@@ -142,7 +150,7 @@ function SIPEdit() {
                     <div className="grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-6">
                         <div className="sm:col-span-6">
                             <Title variant="h3" className="bg-[#FF6600] text-white text-center p-2">
-                                Données de base
+                                {t("donneesDeBase")}
                             </Title>
                         </div>
                         <InputField label="Projet" name="projet" value={formData.projet} onChange={() => {}} disabled={true} />

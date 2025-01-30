@@ -1,3 +1,24 @@
 {
-    "title": "Monitoring de Projet"
+    "title": "Monitoring de Projet",
+    "projects": "Projets",
+    "project": "Projet",
+    "subproject": "Sous-Projet",
+    "addNew": "Ajouter un nouveau projet",
+    "status": "Statut",
+    "version": "Version",
+    "actions": "Actions",
+    "edit": "Editer",
+    "delete": "Supprimer",
+    "cancel": "Annuler",
+    "save": "Sauvegarder",
+    "projectNumber": "N° Projet",
+    "location": "Localité",
+    "parcel": "Parcelle",
+    "subprojectNumber": "N° Sous-Projet",
+    "owner": "Propriétaire",
+    "type": "Type",
+    "remuneration": "Remunération",
+    "ppe": "PPE",
+    "active": "Actif",
+    "inactive": "Inactif"
 }

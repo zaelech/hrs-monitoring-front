@@ -1,13 +1,14 @@
 "use client";
 import { useTranslation } from "@/../app/i18n/client";
 import LanguageSwitcher from "./LanguageSwitcher";
+import { useEffect, useState } from "react";
 
 interface HeaderProps {
     lng: string;
 }
 
 const Header = ({ lng }: HeaderProps) => {
-    const { t } = useTranslation(lng, "common");
+    const { t, i18n } = useTranslation(lng, "common");
 
     return (
         <header className="h-12 bg-[#FF6600] fixed top-0 left-0 right-0 z-50 flex items-center px-4">
