@@ -9,11 +9,12 @@ import { SelectField } from "@/components/common/SelectField";
 import Title from "@/components/common/Title";
 import { useState } from "react";
 import { useTranslation } from "@/../app/i18n/client";
+import { use } from "react";
 
 interface PageProps {
-    params: {
+    params: Promise<{
         lng: string;
-    };
+    }>;
 }
 
 interface FormData {
@@ -55,7 +56,8 @@ interface FormData {
     problemesSousTraitantsCommentaire: string;
 }
 
-function SIPEdit({ params: { lng } }: PageProps) {
+function SIPEdit({ params }: PageProps) {
+    const { lng } = use(params) as { lng: string };
     const { t } = useTranslation(lng, "sip");
     const [formData, setFormData] = useState<FormData>({
         projet: "Aéroport - Aile Est - Bat 2",
@@ -153,65 +155,65 @@ function SIPEdit({ params: { lng } }: PageProps) {
                                 {t("donneesDeBase")}
                             </Title>
                         </div>
-                        <InputField label="Projet" name="projet" value={formData.projet} onChange={() => {}} disabled={true} />
-                        <InputField label="No" name="numero" value={formData.numero} onChange={() => {}} disabled={true} />
+                        <InputField label={t("projet")} name="projet" value={formData.projet} onChange={() => {}} disabled={true} />
+                        <InputField label={t("numero")} name="numero" value={formData.numero} onChange={() => {}} disabled={true} />
                         <div className="flex flex-col gap-2">
-                            <span className="font-medium">Ressources HRS</span>
+                            <span className="font-medium">{t("ressourcesHrs")}</span>
                             <button type="button" className="border-solid border-2 border-[#FF6600] text-[#FF6600] text-sm px-3 py-1 rounded w-fit">
-                                Ajouter
+                            {t("ajouter")}
                             </button>
                         </div>
                         <div className="sm:col-span-5">
                             <RessourcesHRS />
                         </div>
                         <div className="flex flex-col gap-2">
-                            <span className="font-medium">Prestataires</span>
+                            <span className="font-medium">{t("prestataires")}</span>
                             <button type="button" className="border-solid border-2 border-[#FF6600] text-[#FF6600] text-sm px-3 py-1 rounded w-fit">
-                                Ajouter
+                            {t("ajouter")}
                             </button>
                         </div>
                         <div className="sm:col-span-5">
                             <Prestataires />
                         </div>
                         <InputField
-                            label="Début travaux"
+                            label={t("debutTravaux")}
                             name="debutTravaux"
                             type="date"
                             value={formData.debutTravaux}
                             onChange={handleChange("debutTravaux")}
                         />
-                        <InputField label="Réception" name="reception" type="date" value={formData.reception} onChange={handleChange("reception")} />
+                        <InputField label={t("reception")} name="reception" type="date" value={formData.reception} onChange={handleChange("reception")} />
                         <InputField
-                            label="Signature contrat"
+                            label={t("signatureContrat")}
                             name="signatureContrat"
                             type="date"
                             value={formData.signatureContrat}
                             onChange={handleChange("signatureContrat")}
                         />
-                        <InputField label="Nb jrs" name="nbJours" value={nbJours().toString()} onChange={() => {}} disabled={true} />
-                        <InputField label="Assurance RC/TC" name="assuranceRcTc" value={formData.assuranceRcTc} onChange={handleChange("assuranceRcTc")} />
+                        <InputField label={t("nbJours")} name="nbJours" value={nbJours().toString()} onChange={() => {}} disabled={true} />
+                        <InputField label={t("assuranceRcTc")} name="assuranceRcTc" value={formData.assuranceRcTc} onChange={handleChange("assuranceRcTc")} />
                         <InputField
-                            label="Validite police"
+                            label={t("validitePolice")}
                             type="date"
                             name="validitePolice"
                             value={formData.validitePolice}
                             onChange={handleChange("validitePolice")}
                         />
                         <InputField
-                            label="Garantie bonne execution"
+                            label={t("garantieBonneExecution")}
                             name="garantieBonneExecution"
                             value={formData.garantieBonneExecution}
                             onChange={handleChange("garantieBonneExecution")}
                         />
                         <InputField
-                            label="Validite garantie"
+                            label={t("validiteGarantie")}
                             type="date"
                             name="validiteGarantie"
                             value={formData.validiteGarantie}
                             onChange={handleChange("validiteGarantie")}
                         />
                         <InputField
-                            label="Montant garantie"
+                            label={t("montantGarantie")}
                             name="montantGarantie"
                             value={formData.montantGarantie}
                             onChange={handleChange("montantGarantie")}
@@ -219,56 +221,56 @@ function SIPEdit({ params: { lng } }: PageProps) {
                         />
                         <div className="sm:col-span-6">
                             <Title variant="h3" className="bg-[#FF6600] text-white text-center p-2">
-                                Controlling
+                                {t("controlling")}
                             </Title>
                         </div>
                         <InputField
-                            label="Montant contrat (HT)"
+                            label={t("montantContratHT")}
                             name="montantContratHT"
                             value={formData.montantContratHT}
                             onChange={handleChange("montantContratHT")}
                             currency={true}
                         />
                         <InputField
-                            label="Honnoraires HRS"
+                            label={t("honnorairesHRS")}
                             name="honnorairesHRS"
                             value={formData.honnorairesHRS}
                             onChange={handleChange("honnorairesHRS")}
                             currency={true}
                         />
                         <InputField
-                            label="Avenants PO signes (HT)"
+                            label={t("avenantsPOSignes")}
                             name="avenantsPOSignes"
                             value={formData.avenantsPOSignes}
                             onChange={handleChange("avenantsPOSignes")}
                             currency={true}
                         />
                         <InputField
-                            label="Honoraires DT externes"
+                            label={t("honorairesDTExternes")}
                             name="honorairesDTExternes"
                             value={formData.honorairesDTExternes}
                             onChange={handleChange("honorairesDTExternes")}
                             currency={true}
                         />
                         <InputField
-                            label="Total = devis révisés (HT)"
+                            label={t("totalDevisRevises")}
                             name="totalDevisRevises"
                             value={totalDevisRevises().toFixed(2)}
                             onChange={() => {}}
                             disabled={true}
                             currency={true}
                         />
-                        <InputField label="RG HRS" name="rgHrs" value={formData.rgHrs} onChange={handleChange("rgHrs")} currency={true} />
+                        <InputField label={t("rgHrs")} name="rgHrs" value={formData.rgHrs} onChange={handleChange("rgHrs")} currency={true} />
                         <InputField
-                            label="Cout probable Messerli"
+                            label={t("coutProbableMesserli")}
                             name="coutProbableMesserli"
                             value={formData.coutProbableMesserli}
                             onChange={handleChange("coutProbableMesserli")}
                             currency={true}
                         />
                         <InputField
-                            label="Coût prob./devis révisé (HT)"
-                            name="totalCoutProbable"
+                            label={t("coutProbableDevisRevise")}
+                            name="coutProbableDevisRevise"
                             value={coutProbableDevisRevise().toFixed(2)}
                             onChange={() => {}}
                             disabled={true}
@@ -276,33 +278,33 @@ function SIPEdit({ params: { lng } }: PageProps) {
                         />
                         <div className="sm:col-span-6">
                             <Title variant="h3" className="bg-[#FF6600] text-white text-center p-2">
-                                Liquidité
+                                {t("liquidite")}
                             </Title>
                         </div>
                         <InputField
-                            label="Montant facturé au MO (HT)"
+                            label={t("montantFactureAuMo")}
                             name="montantFactureAuMo"
                             value={formData.montantFactureAuMo}
                             onChange={handleChange("montantFactureAuMo")}
                             currency={true}
                         />
                         <InputField
-                            label="Paiements HRS"
+                            label={t("paiementsHRS")}
                             name="paiementsHRS"
                             value={formData.paiementsHRS}
                             onChange={handleChange("paiementsHRS")}
                             currency={true}
                         />
                         <InputField
-                            label="Montant payé par MO (HT)"
+                            label={t("montantPayeParMo")}
                             name="montantPayeParMo"
                             value={formData.montantPayeParMo}
                             onChange={handleChange("montantPayeParMo")}
                             currency={true}
                         />
-                        <InputField label="Liquidité" name="liquidite" value={liquidite().toFixed(2)} onChange={() => {}} disabled={true} currency={true} />
+                        <InputField label={t("liquidite")} name="liquidite" value={liquidite().toFixed(2)} onChange={() => {}} disabled={true} currency={true} />
                         <InputField
-                            label="Retard paiement MO"
+                            label={t("retardPaiementMO")}
                             name="retardPaiementMO"
                             value={retardPaiementMO().toFixed(2)}
                             onChange={() => {}}
@@ -310,7 +312,7 @@ function SIPEdit({ params: { lng } }: PageProps) {
                             currency={true}
                         />
                         <InputField
-                            label="Autres débiteurs (HT)"
+                            label={t("autresDebiteurs")}
                             name="autresDebiteurs"
                             value={formData.autresDebiteurs}
                             onChange={handleChange("autresDebiteurs")}
@@ -319,46 +321,46 @@ function SIPEdit({ params: { lng } }: PageProps) {
 
                         <div className="sm:col-span-6">
                             <Title variant="h3" className="bg-[#FF6600] text-white text-center p-2">
-                                Gestion PPE
+                                {t("gestionPpe")}
                             </Title>
                         </div>
                         <InputField
-                            label="Etat des ventes"
+                            label={t("etatDesVentes")}
                             name="etatDesVentes"
                             value={formData.etatDesVentes}
                             onChange={handleChange("etatDesVentes")}
                             currency={true}
                         />
                         <InputField
-                            label="sur"
+                            label={t("sur")}
                             name="etatDesVentesSur"
                             value={formData.etatDesVentesSur}
                             onChange={handleChange("etatDesVentesSur")}
                             currency={true}
                         />
                         <InputField
-                            label="Devis acquér. transmis. (HT)"
+                            label={t("devisAcquerTransmis")}
                             name="devisAcquerTransmis"
                             value={formData.devisAcquerTransmis}
                             onChange={handleChange("devisAcquerTransmis")}
                             currency={true}
                         />
                         <InputField
-                            label="Devis acquér. facturés (HT)"
+                            label={t("devisAcquerFactures")}
                             name="devisAcquerFactures"
                             value={formData.devisAcquerFactures}
                             onChange={handleChange("devisAcquerFactures")}
                             currency={true}
                         />
                         <InputField
-                            label="Devis acquéreurs signés (HT)"
+                            label={t("devisAcquerSignes")}
                             name="devisAcquereursSignes"
                             value={formData.devisAcquerFactures}
                             onChange={handleChange("devisAcquerFactures")}
                             currency={true}
                         />
                         <InputField
-                            label="Devis acquéreurs payés (HT)"
+                            label={t("devisAcquerPayes")}
                             name="devisAcquereursPayes"
                             value={formData.devisAcquereursPayes}
                             onChange={handleChange("devisAcquereursPayes")}
@@ -366,18 +368,18 @@ function SIPEdit({ params: { lng } }: PageProps) {
                         />
                         <div className="sm:col-span-6">
                             <Title variant="h3" className="bg-[#FF6600] text-white text-center p-2">
-                                Avenants MO (modification projet)
+                                {t("avenantsMo")}
                             </Title>
                         </div>
                         <InputField
-                            label="Transmis, non validés (HT)"
+                            label={t("transmisNonValides")}
                             name="transmisNonValides"
                             value={formData.transmisNonValides}
                             onChange={handleChange("transmisNonValides")}
                             currency={true}
                         />
                         <InputField
-                            label="A transmettre, estimation (HT)"
+                            label={t("aTransmettreEstimation")}
                             name="aTransmettreEstimation"
                             value={formData.aTransmettreEstimation}
                             onChange={handleChange("aTransmettreEstimation")}
@@ -385,38 +387,38 @@ function SIPEdit({ params: { lng } }: PageProps) {
                         />
                         <div className="sm:col-span-6">
                             <Title variant="h3" className="bg-[#FF6600] text-white text-center p-2">
-                                Adjudications
+                                {t("adjudications")}
                             </Title>
                         </div>
                         <InputField
-                            label="CFC en cours d'ajudication"
+                            label={t("cfcEnCoursAjudication")}
                             name="cfcEnCoursAjudication"
                             value={formData.cfcEnCoursAjudication}
                             onChange={handleChange("cfcEnCoursAjudication")}
                         />
                         <InputField
-                            label="CFC en préparation"
+                            label={t("cfcEnPreparation")}
                             name="cfcEnPreparation"
                             value={formData.cfcEnPreparation}
                             onChange={handleChange("cfcEnPreparation")}
                         />
                         <div className="sm:col-span-3">
                             <Title variant="h3" className="bg-[#FF6600] text-white text-center p-2">
-                                Délais
+                                {t("delais")}
                             </Title>
                         </div>
 
                         <div className="sm:col-span-3">
                             <Title variant="h3" className="bg-[#FF6600] text-white text-center p-2">
-                                Sécurité
+                                {t("securite")}
                             </Title>
                         </div>
                         <RadioField
                             name="delaisConformite"
                             value={formData.delaisConformite}
                             options={[
-                                { label: "Conforme", value: "conforme" },
-                                { label: "Non conforme", value: "non conforme" },
+                                { label: t("conforme"), value: "conforme" },
+                                { label: t("nonConforme"), value: "non conforme" },
                             ]}
                             onChange={handleChange("delaisConformite")}
                             disabled={false}
@@ -425,8 +427,8 @@ function SIPEdit({ params: { lng } }: PageProps) {
                             name="securiteConformite"
                             value={formData.securiteConformite}
                             options={[
-                                { label: "Conforme", value: "conforme" },
-                                { label: "Non conforme", value: "non conforme" },
+                                { label: t("conforme"), value: "conforme" },
+                                { label: t("nonConforme"), value: "non conforme" },
                             ]}
                             onChange={handleChange("securiteConformite")}
                             disabled={false}
@@ -440,12 +442,12 @@ function SIPEdit({ params: { lng } }: PageProps) {
                         />
                         <div className="sm:col-span-3">
                             <Title variant="h3" className="bg-[#FF6600] text-white text-center p-2">
-                                Planification mandataires
+                                {t("planificationMandataires")}
                             </Title>
                         </div>
                         <div className="sm:col-span-3">
                             <Title variant="h3" className="bg-[#FF6600] text-white text-center p-2">
-                                Problèmes sous-traitants
+                                {t("problemesSousTraitants")}
                             </Title>
                         </div>
                         <TextAreaField
@@ -462,7 +464,7 @@ function SIPEdit({ params: { lng } }: PageProps) {
                         />
                         <div className="sm:col-span-6">
                             <Title variant="h3" className="bg-[#FF6600] text-white text-center p-2">
-                                Annexes
+                                {t("annexes")}
                             </Title>
                         </div>
                     </div>
