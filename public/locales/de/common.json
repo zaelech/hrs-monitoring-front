@@ -1,4 +1,24 @@
 {
-    "title": "Projektmonitoring",
-    "projects": "Projekte"
+    "title": "Projektüberwachung",
+    "projects": "Projekte",
+    "project": "Projekt",
+    "subproject": "Teilprojekt",
+    "addNew": "Neues Projekt hinzufügen",
+    "status": "Status",
+    "version": "Version",
+    "actions": "Aktionen",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "cancel": "Abbrechen",
+    "save": "Speichern",
+    "projectNumber": "Projekt-Nr.",
+    "location": "Ort",
+    "parcel": "Parzelle",
+    "subprojectNumber": "Teilprojekt-Nr.",
+    "owner": "Eigentümer",
+    "type": "Typ",
+    "remuneration": "Vergütung",
+    "ppe": "PPE",
+    "active": "Aktiv",
+    "inactive": "Inaktiv"
 }
