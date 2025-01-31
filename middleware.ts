@@ -22,7 +22,10 @@ export default auth((req) => {
     }
 });
 
-// Configuration du matcher pour exclure les ressources statiques et les API
+// Configuration du matcher pour inclure les routes API et exclure les ressources statiques
 export const config = {
-    matcher: ["/((?!api|_next/static|_next/image|favicon.ico|.*\\..*|_next/.*|$).*)"],
+    matcher: [
+        "/((?!_next/static|_next/image|favicon.ico|.*\\..*).*))",
+        "/api/:path*"
+    ],
 };

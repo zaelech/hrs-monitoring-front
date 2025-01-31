@@ -1,9 +1,16 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
+import { auth } from "@/../app/auth";
 
 // Cette fonction gère les requêtes GET pour récupérer toutes les locations
 export async function GET() {
     try {
+        // Vérification de l'authentification
+        const session = await auth();
+        if (!session) {
+            return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+        }
+
         // Utilisation de notre client Prisma pour récupérer toutes les locations
         const locations = await prisma.location.findMany();
 
@@ -18,6 +25,12 @@ export async function GET() {
 // Cette fonction gère les requêtes POST pour créer une nouvelle location
 export async function POST(request: Request) {
     try {
+        // Vérification de l'authentification
+        const session = await auth();
+        if (!session) {
+            return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+        }
+
         // Récupération des données envoyées dans la requête
         const data = await request.json();
 
