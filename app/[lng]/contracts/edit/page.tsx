@@ -223,14 +223,14 @@ function ContractEdit({ params }: PageProps) {
                             </Title>
                         </div>
                         <InputField
-                            label={t("wir_Montant")}
+                            label={t("wirMontant")}
                             name="wirMontant"
                             type="text"
                             value={formData.wirMontant}
                             onChange={handleChange("wirMontant")}
                         />
                         <InputField
-                            label={t("wir_Date")}
+                            label={t("wirDate")}
                             name="wirDate"
                             type="date"
                             value={formData.wirDate}
@@ -242,35 +242,35 @@ function ContractEdit({ params }: PageProps) {
                             </Title>
                         </div>
                         <InputField
-                            label={t("gbe_Montant")}
+                            label={t("gbeMontant")}
                             name="gbeMontant"
                             type="text"
                             value={formData.gbeMontant}
                             onChange={handleChange("gbeMontant")}
                         />
                         <InputField
-                            label={t("gbe_Echeance")}
+                            label={t("gbeEcheance")}
                             name="gbeEcheance"
                             type="date"
                             value={formData.gbeEcheance}
                             onChange={handleChange("gbeEcheance")}
                         />
                         <InputField
-                            label={t("gbe_DateReception")}
+                            label={t("gbeDateReception")}
                             name="gbeDateReception"
                             type="date"
                             value={formData.gbeDateReception}
                             onChange={handleChange("gbeDateReception")}
                         />
                         <InputField
-                            label={t("g_Acompte_Montant")}
+                            label={t("gAcompteMontant")}
                             name="g_Acompte_Montant"
                             type="text"
                             value={formData.g_Acompte_Montant}
                             onChange={handleChange("g_Acompte_Montant")}
                         />
                         <InputField
-                            label={t("g_Acompte_DateReception")}
+                            label={t("gAcompteDateReception")}
                             name="g_Acompte_DateReception"
                             type="date"
                             value={formData.g_Acompte_DateReception}
@@ -282,7 +282,7 @@ function ContractEdit({ params }: PageProps) {
                             </Title>
                         </div>
                         <InputField
-                            label={t("dec_Resp")}
+                            label={t("decResp")}
                             name="dec_Resp"
                             type="text"
                             value={formData.dec_Resp}
@@ -317,14 +317,14 @@ function ContractEdit({ params }: PageProps) {
                             onChange={handleChange("signe")}
                         />
                         <InputField
-                            label={t("g_Dft_Montant")}
+                            label={t("gDftMontant")}
                             name="g_Dft_Montant"
                             type="text"
                             value={formData.g_Dft_Montant}
                             onChange={handleChange("g_Dft_Montant")}
                         />
                         <InputField
-                            label={t("g_Dft_reçu")}
+                            label={t("gDftRecu")}
                             name="g_Dft_reçu"
                             type="date"
                             value={formData.g_Dft_reçu}
