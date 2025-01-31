@@ -1,13 +1,27 @@
 // Dans /components/LayoutWrapper.tsx
 "use client";
 
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
+import { useEffect } from "react";
 
 export default function LayoutWrapper({ children, lng }: { children: React.ReactNode; lng: string }) {
     const pathname = usePathname();
+    const { data: session, status } = useSession();
+    const router = useRouter();
     const isLoginPage = pathname?.includes("/login") ?? false;
+
+    useEffect(() => {
+        if (status === "unauthenticated" && !isLoginPage) {
+            router.push(`/${lng}/login`);
+        }
+    }, [status, isLoginPage, router, lng]);
+
+    if (status === "loading") {
+        return <div className="flex items-center justify-center min-h-screen">Chargement...</div>;
+    }
 
     if (isLoginPage) {
         return (
@@ -16,6 +30,10 @@ export default function LayoutWrapper({ children, lng }: { children: React.React
                 <div className="flex items-center justify-center min-h-screen">{children}</div>
             </>
         );
+    }
+
+    if (!session && !isLoginPage) {
+        return null; // Prevent flash of content while redirecting
     }
 
     return (

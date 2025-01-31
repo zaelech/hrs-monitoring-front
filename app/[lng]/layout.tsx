@@ -10,10 +10,14 @@ export async function generateStaticParams() {
     return languages.map((lng) => ({ lng }));
 }
 
-// Notez que nous recevons params comme un objet complet
-export default async function Layout({ children, params }: { children: React.ReactNode; params: { lng: string } }) {
-    // Nous pouvons accéder à lng ici
-    const { lng } = params;
+interface LayoutProps {
+    children: React.ReactNode;
+    params: Promise<{ lng: string }>;
+}
+
+export default async function Layout({ children, params }: LayoutProps) {
+    // Attendre la résolution des paramètres
+    const { lng } = await params;
 
     return (
         <div className={`min-h-screen bg-gray-50/50 ${inter.className}`}>

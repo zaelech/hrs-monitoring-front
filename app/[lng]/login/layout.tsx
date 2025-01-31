@@ -2,12 +2,12 @@ import { PropsWithChildren } from "react";
 
 type LoginLayoutProps = {
     children: React.ReactNode;
-    params: { lng: string };
+    params: Promise<{ lng: string }>;
 };
 
 export default async function LoginLayout({ children, params }: LoginLayoutProps) {
     // Nous accédons à lng ici
-    const { lng } = params;
+    const { lng } = await params;
 
     return <div className="min-h-screen">{children}</div>;
 }
