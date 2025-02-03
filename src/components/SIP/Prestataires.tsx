@@ -40,7 +40,7 @@ function Prestataires() {
                 <Fragment key={prestataire.label}>
                     {" "}
                     {/* On utilise label comme clé car il semble unique */}
-                    <div className="sm:col-span-1 content-center">
+                    <div id={index.toString()} className="sm:col-span-1 content-center">
                         <span className="block text-sm font-medium leading-6 text-gray-900">{prestataire.label}</span>
                     </div>
                     <div className="sm:col-span-2">

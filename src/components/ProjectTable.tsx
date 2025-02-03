@@ -68,7 +68,7 @@ const ProjectTable = ({ lng, projects }: ProjectTableProps) => {
                 <thead>
                     <tr className="bg-gray-50/50">
                         {["Project", "Sub-Project", "Status", "Version"].map((header, index) => (
-                            <th key={header} scope="col" className="px-6 py-4">
+                            <th key={header} id={index.toString()} scope="col" className="px-6 py-4">
                                 <div className="space-y-2">
                                     <div
                                         className="flex items-center justify-between gap-2 text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"

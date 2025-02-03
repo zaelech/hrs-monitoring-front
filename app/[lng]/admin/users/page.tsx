@@ -5,13 +5,20 @@ import { useTranslation } from "@/../app/i18n/client";
 import { WithPermission } from "@/components/WithPermission";
 import { User, Group } from "@prisma/client";
 
+interface PageProps {
+    params: Promise<{
+        lng: string;
+    }>;
+}
+
 type UserWithGroups = User & {
     groups: Array<{
         group: Group;
     }>;
 };
 
-export default function UsersPage({ params: { lng } }: { params: { lng: string } }) {
+async function UsersPage({ params }: PageProps) {
+    const { lng } = await params;
     const { t } = useTranslation(lng, "common");
     const [users, setUsers] = useState<UserWithGroups[]>([]);
     const [groups, setGroups] = useState<Group[]>([]);
@@ -189,3 +196,5 @@ export default function UsersPage({ params: { lng } }: { params: { lng: string }
         </WithPermission>
     );
 }
+
+export default UsersPage;
