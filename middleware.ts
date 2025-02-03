@@ -6,15 +6,18 @@ import { auth } from "./app/auth";
 export default auth((req) => {
     const pathname = req.nextUrl.pathname;
 
+    // Ne pas rediriger les routes API
+    if (pathname.startsWith("/api/")) {
+        return NextResponse.next();
+    }
+
     // Si on est à la racine, rediriger vers la langue par défaut
     if (pathname === "/") {
         return NextResponse.redirect(new URL(`/${defaultLanguage}`, req.url));
     }
 
     // Vérifier si le chemin contient déjà un code de langue
-    const pathnameIsMissingLocale = languages.every(
-        (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
-    );
+    const pathnameIsMissingLocale = languages.every((locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`);
 
     // Si le chemin n'a pas de locale, ajouter la langue par défaut
     if (pathnameIsMissingLocale) {
@@ -24,8 +27,5 @@ export default auth((req) => {
 
 // Configuration du matcher pour inclure les routes API et exclure les ressources statiques
 export const config = {
-    matcher: [
-        "/((?!_next/static|_next/image|favicon.ico|.*\\..*).*))",
-        "/api/:path*"
-    ],
+    matcher: ["/((?!_next/static|_next/image|favicon.ico|.*\\..*).*))", "/api/:path*"],
 };

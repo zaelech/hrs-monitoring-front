@@ -3,9 +3,17 @@ import Credentials from "next-auth/providers/credentials";
 import type { NextAuthConfig } from "next-auth";
 import type { Session, User } from "next-auth";
 import type { JWT } from "next-auth/jwt";
-import type { Group } from "@/types/auth";
+import type { Group, Permission } from "@/types/auth";
 import prisma from "@/lib/prisma";
 import bcrypt from "bcryptjs";
+
+// Extension du type JWT
+declare module "next-auth/jwt" {
+    interface JWT {
+        id?: string;
+        groups?: Group[];
+    }
+}
 
 export const config = {
     providers: [
@@ -14,14 +22,14 @@ export const config = {
                 email: { label: "Email", type: "email" },
                 password: { label: "Password", type: "password" },
             },
-            async authorize(credentials) {
+            async authorize(credentials, request: Request) {
                 if (!credentials?.email || !credentials?.password) {
                     return null;
                 }
 
                 try {
                     const user = await prisma.user.findUnique({
-                        where: { email: credentials.email },
+                        where: { email: credentials.email as string },
                         include: {
                             groups: {
                                 include: {
@@ -29,40 +37,39 @@ export const config = {
                                         include: {
                                             permissions: {
                                                 include: {
-                                                    permission: true
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                                                    permission: true,
+                                                },
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
                     });
 
                     if (!user) {
-                        console.log("Utilisateur non trouvé:", credentials.email);
                         return null;
                     }
 
-                    const isPasswordValid = await bcrypt.compare(credentials.password, user.password);
+                    const isPasswordValid = await bcrypt.compare(credentials.password as string, user.password);
+
                     if (!isPasswordValid) {
-                        console.log("Mot de passe invalide pour:", credentials.email);
                         return null;
                     }
 
-                    // Transformation des données pour correspondre au format attendu
-                    const formattedGroups = user.groups.map(groupUser => ({
-                        id: groupUser.group.id,
-                        name: groupUser.group.name,
-                        permissions: groupUser.group.permissions.map(gp => gp.permission.name)
-                    }));
-
-                    return {
+                    // Transformer les données pour correspondre au type User attendu
+                    const transformedUser: User = {
                         id: user.id,
                         name: user.name,
                         email: user.email,
-                        groups: formattedGroups
+                        groups: user.groups.map((ug) => ({
+                            id: ug.group.id,
+                            name: ug.group.name,
+                            permissions: ug.group.permissions.map((gp) => gp.permission.name as Permission),
+                        })),
                     };
+
+                    return transformedUser;
                 } catch (error) {
                     console.error("Erreur lors de l'authentification:", error);
                     return null;
@@ -74,7 +81,7 @@ export const config = {
         async session({ session, token }: { session: Session; token: JWT }) {
             if (token && session.user) {
                 session.user.id = token.id as string;
-                session.user.groups = token.groups as Group[];
+                session.user.groups = token.groups;
             }
             return session;
         },
