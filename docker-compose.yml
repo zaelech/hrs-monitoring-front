@@ -1,19 +1,24 @@
-version: "3.8"
+version: '3.8'
 
 services:
-    app:
-        build:
-            context: .
-            dockerfile: Dockerfile
-        ports:
-            - "3000:3000"
-        env_file:
-            - .env
-        environment:
-            - NODE_ENV=production
-        networks:
-            - hrs-network
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+      # Configuration de l'authentification
+      - NEXTAUTH_URL=http://localhost:3000
+      - NEXTAUTH_URL_INTERNAL=http://localhost:3000
+      # Autoriser les requêtes locales
+      - AUTH_TRUST_HOST=true
+    networks:
+      - hrs-network
 
 networks:
-    hrs-network:
-        driver: bridge
+  hrs-network:
+    driver: bridge
