@@ -27,3 +27,5 @@ dist-ssr
 .next/data/*
 .next/static/*
 .next/cache/*
+
+.env

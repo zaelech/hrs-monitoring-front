@@ -1,0 +1,75 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String      @id @default(cuid())
+  name      String
+  email     String      @unique
+  password  String
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  groups    GroupUser[]
+}
+
+model Group {
+  id          String            @id @default(cuid())
+  name        String            @unique
+  description String?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  permissions GroupPermission[]
+  users       GroupUser[]
+}
+
+model Permission {
+  id          String            @id @default(cuid())
+  name        String            @unique
+  description String?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  groups      GroupPermission[]
+}
+
+model GroupUser {
+  userId    String
+  groupId   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  group     Group    @relation(fields: [groupId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@id([userId, groupId])
+}
+
+model GroupPermission {
+  groupId      String
+  permissionId String
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  group        Group      @relation(fields: [groupId], references: [id])
+  permission   Permission @relation(fields: [permissionId], references: [id])
+
+  @@id([groupId, permissionId])
+}
+
+model Location {
+  id           Int      @id @default(autoincrement())
+  place        String
+  zipCode      String
+  number       Int
+  municipality String
+  bfsNumber    String
+  canton       String
+  coordinateE  Float
+  coordinateN  Float
+  language     String
+  validity     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
