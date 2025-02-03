@@ -9,6 +9,7 @@ interface PageProps {
     params: Promise<{
         lng: string;
     }>;
+    searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 type UserWithGroups = User & {
@@ -17,8 +18,7 @@ type UserWithGroups = User & {
     }>;
 };
 
-async function UsersPage({ params }: PageProps) {
-    const { lng } = await params;
+function UsersPageClient({ lng }: { lng: string }) {
     const { t } = useTranslation(lng, "common");
     const [users, setUsers] = useState<UserWithGroups[]>([]);
     const [groups, setGroups] = useState<Group[]>([]);
@@ -34,29 +34,26 @@ async function UsersPage({ params }: PageProps) {
     });
 
     // Chargement des utilisateurs
-    const fetchUsers = async () => {
-        try {
-            const response = await fetch("/api/users");
-            if (!response.ok) throw new Error("Erreur lors du chargement des utilisateurs");
-            const data = await response.json();
-            setUsers(data);
-        } catch (err) {
-            setError(err instanceof Error ? err.message : "Une erreur est survenue");
-        }
+    const fetchUsers = () => {
+        fetch("/api/users")
+            .then((response) => {
+                if (!response.ok) throw new Error("Erreur lors du chargement des utilisateurs");
+                return response.json();
+            })
+            .then((data) => setUsers(data))
+            .catch((err) => setError(err instanceof Error ? err.message : "Une erreur est survenue"));
     };
 
     // Chargement des groupes
-    const fetchGroups = async () => {
-        try {
-            const response = await fetch("/api/groups");
-            if (!response.ok) throw new Error("Erreur lors du chargement des groupes");
-            const data = await response.json();
-            setGroups(data);
-        } catch (err) {
-            setError(err instanceof Error ? err.message : "Une erreur est survenue");
-        } finally {
-            setLoading(false);
-        }
+    const fetchGroups = () => {
+        fetch("/api/groups")
+            .then((response) => {
+                if (!response.ok) throw new Error("Erreur lors du chargement des groupes");
+                return response.json();
+            })
+            .then((data) => setGroups(data))
+            .catch((err) => setError(err instanceof Error ? err.message : "Une erreur est survenue"))
+            .finally(() => setLoading(false));
     };
 
     useEffect(() => {
@@ -64,32 +61,29 @@ async function UsersPage({ params }: PageProps) {
         fetchGroups();
     }, []);
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        try {
-            const response = await fetch("/api/users", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(newUser),
-            });
-
-            if (!response.ok) {
-                throw new Error("Erreur lors de la création de l'utilisateur");
-            }
-
-            // Réinitialiser le formulaire et recharger les utilisateurs
-            setNewUser({
-                name: "",
-                email: "",
-                password: "",
-                groupIds: [],
-            });
-            fetchUsers();
-        } catch (err) {
-            setError(err instanceof Error ? err.message : "Une erreur est survenue");
-        }
+        fetch("/api/users", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newUser),
+        })
+            .then((response) => {
+                if (!response.ok) throw new Error("Erreur lors de la création de l'utilisateur");
+            })
+            .then(() => {
+                // Réinitialiser le formulaire et recharger les utilisateurs
+                setNewUser({
+                    name: "",
+                    email: "",
+                    password: "",
+                    groupIds: [],
+                });
+                fetchUsers();
+            })
+            .catch((err) => setError(err instanceof Error ? err.message : "Une erreur est survenue"));
     };
 
     if (loading) return <div className="p-4">Chargement...</div>;
@@ -197,4 +191,7 @@ async function UsersPage({ params }: PageProps) {
     );
 }
 
-export default UsersPage;
+export default async function UsersPage({ params, searchParams }: PageProps) {
+    const { lng } = await params;
+    return <UsersPageClient lng={lng} />;
+}
