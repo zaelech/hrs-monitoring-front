@@ -16,8 +16,11 @@ COPY next.config.js ./
 COPY tailwind.config.js ./
 COPY postcss.config.js ./
 
-# Copie du reste du code source
+# Copie du code source en restructurant pour Next.js
 COPY src ./src
+RUN mkdir -p app && mv src/* app/ || true
+
+# Copie des assets publics
 COPY public ./public
 
 # Génération du client Prisma et build de l'application
