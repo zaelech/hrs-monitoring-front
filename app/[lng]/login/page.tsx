@@ -24,12 +24,12 @@ export default function LoginPage({ params }: LoginPageProps) {
         setError(null);
 
         const formData = new FormData(event.currentTarget);
-        const username = formData.get("username") as string;
+        const email = formData.get("email") as string;
         const password = formData.get("password") as string;
 
         try {
             const result = await signIn("credentials", {
-                username,
+                email,
                 password,
                 redirect: false,
             });
@@ -51,51 +51,60 @@ export default function LoginPage({ params }: LoginPageProps) {
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center">
-            <div className="max-w-sm w-full mx-auto">
-                <div className="bg-white shadow-md rounded-lg p-6">
-                    <h1 className="text-2xl font-bold text-center mb-6">{t("loginTitle")}</h1>
-
-                    {error && <div className="mb-4 p-3 bg-red-50 text-red-500 rounded-md">{error}</div>}
-
-                    <form onSubmit={handleSubmit} className="space-y-4">
-                        <div>
-                            <label htmlFor="username" className="block text-sm font-medium text-gray-700">
-                                {t("username")}
-                            </label>
-                            <input
-                                type="text"
-                                id="username"
-                                name="username"
-                                required
-                                className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#FF6600] focus:border-[#FF6600]"
-                                disabled={isLoading}
-                            />
-                        </div>
-
-                        <div>
-                            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                                {t("password")}
-                            </label>
-                            <input
-                                type="password"
-                                id="password"
-                                name="password"
-                                required
-                                className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#FF6600] focus:border-[#FF6600]"
-                                disabled={isLoading}
-                            />
-                        </div>
-
-                        <button
-                            type="submit"
-                            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#FF6600] hover:bg-[#FF8533] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FF6600] disabled:opacity-50"
-                            disabled={isLoading}
-                        >
-                            {isLoading ? t("loading") : t("login")}
-                        </button>
-                    </form>
+        <div className="flex min-h-screen flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+            <div className="w-full max-w-md">
+                <div className="mb-8 text-center">
+                    <h1 className="text-3xl font-bold">{t("loginTitle")}</h1>
                 </div>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                    <div>
+                        <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                            {t("email")}
+                        </label>
+                        <input
+                            id="email"
+                            name="email"
+                            type="email"
+                            autoComplete="email"
+                            required
+                            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500"
+                            disabled={isLoading}
+                        />
+                    </div>
+
+                    <div>
+                        <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                            {t("password")}
+                        </label>
+                        <input
+                            id="password"
+                            name="password"
+                            type="password"
+                            autoComplete="current-password"
+                            required
+                            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500"
+                            disabled={isLoading}
+                        />
+                    </div>
+
+                    {error && (
+                        <div className="rounded-md bg-red-50 p-4">
+                            <div className="flex">
+                                <div className="ml-3">
+                                    <h3 className="text-sm font-medium text-red-800">{error}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    <button
+                        type="submit"
+                        disabled={isLoading}
+                        className="w-full rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"
+                    >
+                        {isLoading ? t("loading") : t("login")}
+                    </button>
+                </form>
             </div>
         </div>
     );

@@ -12,6 +12,18 @@
     "prospection": "Prospection",
     "administration": "Administration",
     "userManagement": "Gestion des utilisateurs",
+    "users": {
+      "title": "Gestion des utilisateurs",
+      "createUser": "Créer un nouvel utilisateur",
+      "name": "Nom",
+      "email": "Email",
+      "password": "Mot de passe",
+      "groups": "Groupes",
+      "create": "Créer l'utilisateur",
+      "loading": "Chargement...",
+      "error": "Une erreur est survenue",
+      "unauthorized": "Accès non autorisé"
+    },
     "partnerManagement": "Gestion des partenaires",
     "projectManagement": "Gestion des projets",
     "subproject": "Sous-Projet",
