@@ -11,14 +11,21 @@ type UserWithGroups = User & {
     }>;
 };
 
-export default function UsersPage({ params: { lng } }: { params: { lng: string } }) {
-    const { t } = useTranslation(lng, "common");
+interface PageParams {
+    params: {
+        lng: string;
+    };
+    searchParams?: Record<string, string | string[] | undefined>;
+}
+
+export default function UsersPage({ params: { lng } }: PageParams) {
     const [users, setUsers] = useState<UserWithGroups[]>([]);
     const [groups, setGroups] = useState<Group[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const { t } = useTranslation(lng, "common");
 
-    // États pour le formulaire de création
+    // Le reste du code reste identique...
     const [newUser, setNewUser] = useState({
         name: "",
         email: "",
@@ -26,7 +33,6 @@ export default function UsersPage({ params: { lng } }: { params: { lng: string }
         groupIds: [] as string[],
     });
 
-    // Chargement des utilisateurs
     const fetchUsers = async () => {
         try {
             const response = await fetch("/api/users");
@@ -38,7 +44,6 @@ export default function UsersPage({ params: { lng } }: { params: { lng: string }
         }
     };
 
-    // Chargement des groupes
     const fetchGroups = async () => {
         try {
             const response = await fetch("/api/groups");
@@ -72,7 +77,6 @@ export default function UsersPage({ params: { lng } }: { params: { lng: string }
                 throw new Error("Erreur lors de la création de l'utilisateur");
             }
 
-            // Réinitialiser le formulaire et recharger les utilisateurs
             setNewUser({
                 name: "",
                 email: "",
@@ -93,7 +97,6 @@ export default function UsersPage({ params: { lng } }: { params: { lng: string }
             <div className="p-4">
                 <h1 className="text-2xl font-bold mb-6">Gestion des utilisateurs</h1>
 
-                {/* Formulaire de création d'utilisateur */}
                 <div className="bg-white p-6 rounded-lg shadow-md mb-6">
                     <h2 className="text-xl font-semibold mb-4">Créer un nouvel utilisateur</h2>
                     <form onSubmit={handleSubmit} className="space-y-4">
@@ -164,7 +167,6 @@ export default function UsersPage({ params: { lng } }: { params: { lng: string }
                     </form>
                 </div>
 
-                {/* Liste des utilisateurs */}
                 <div className="bg-white rounded-lg shadow-md">
                     <table className="min-w-full divide-y divide-gray-200">
                         <thead className="bg-gray-50">
