@@ -17,8 +17,8 @@ COPY next.config.js ./
 COPY tailwind.config.js ./
 COPY postcss.config.js ./
 
-# Copie du reste du code source
-# Le répertoire /app est déjà dans la bonne structure pour Next.js
+# Copie du code source
+COPY src ./src
 COPY app ./app
 COPY public ./public
 
