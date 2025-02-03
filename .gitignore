@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+.next/*
+.next/data/*
+.next/static/*
+.next/cache/*
+
+.env
