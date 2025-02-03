@@ -1,5 +1,5 @@
 import { ChevronRight } from "lucide-react";
-import ProjectTable from "../components/ProjectTable";
+import ProjectTable from "@/components/ProjectTable";
 import { projects } from "../data/projects";
 
 function SIP() {
