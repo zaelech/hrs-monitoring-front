@@ -1,9 +1,15 @@
-import UsersClient from './UsersClient';
+"use client";
+import UsersClient from "./UsersClient";
 
-export default function UsersPage({
-    params,
-}: {
-    params: { lng: string };
-}) {
-    return <UsersClient lng={params.lng} />;
+interface PageProps {
+    params: Promise<{
+        lng: string;
+    }>;
 }
+
+async function UsersPage({ params }: PageProps) {
+    const { lng } = await params;
+    return <UsersClient lng={lng} />;
+}
+
+export default UsersPage;

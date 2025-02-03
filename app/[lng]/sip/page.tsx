@@ -5,12 +5,13 @@ import { projects } from "@/data/projects";
 import { useTranslation } from "@/../app/i18n/client";
 
 interface PageProps {
-    params: {
+    params: Promise<{
         lng: string;
-    };
+    }>;
 }
 
-function SIP({ params: { lng } }: PageProps) {
+async function SIP({ params }: PageProps) {
+    const { lng } = await params;
     const { t } = useTranslation(lng, "common");
     return (
         <div className="max-w-7xl mx-auto px-4 py-8">

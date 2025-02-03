@@ -6,6 +6,11 @@ import { auth } from "./app/auth";
 export default auth((req) => {
     const pathname = req.nextUrl.pathname;
 
+    // Ne pas rediriger les routes API
+    if (pathname.startsWith('/api/')) {
+        return NextResponse.next();
+    }
+
     // Si on est à la racine, rediriger vers la langue par défaut
     if (pathname === "/") {
         return NextResponse.redirect(new URL(`/${defaultLanguage}`, req.url));
