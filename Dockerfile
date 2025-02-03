@@ -6,21 +6,33 @@ WORKDIR /app
 # Installation des dépendances
 COPY package*.json ./
 COPY prisma ./prisma/
-COPY . .
 
+# Installation des dépendances avec un cache plus propre
 RUN npm ci
-RUN npm run build
+
+# Copie des fichiers de configuration
+COPY tsconfig*.json ./
+COPY next.config.js ./
+COPY tailwind.config.js ./
+COPY postcss.config.js ./
+
+# Copie du reste du code source
+COPY src ./src
+COPY public ./public
+
+# Génération du client Prisma et build de l'application
 RUN npx prisma generate
+RUN npm run build
 
 # Étape de production
 FROM node:20-alpine AS runner
 
 WORKDIR /app
 
-# Copie des fichiers nécessaires
+# Copie des fichiers nécessaires depuis l'étape de build
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
+COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
 
