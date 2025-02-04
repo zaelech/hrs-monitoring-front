@@ -5,6 +5,8 @@ import { auth } from "./app/auth";
 
 export default auth((req) => {
     const pathname = req.nextUrl.pathname;
+    const session = req.auth;
+    console.log("Middleware - Session:", session);
     console.log("Middleware - pathname:", pathname);
 
     if (pathname.startsWith("/api/")) {

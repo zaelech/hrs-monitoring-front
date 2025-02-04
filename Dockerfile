@@ -4,26 +4,30 @@ FROM node:20-alpine AS builder
 # Définition du répertoire de travail
 WORKDIR /app
 
-# Copie des fichiers de configuration pour optimiser le cache des dépendances
+# Installation des dépendances globales nécessaires
+RUN apk add --no-cache python3 make g++
+
+# Copie des fichiers de configuration
 COPY package*.json ./
 COPY prisma ./prisma/
 
 # Installation des dépendances
 RUN npm ci
 
-# Copie des fichiers de configuration nécessaires pour le build
+# Copie des fichiers de configuration
 COPY tsconfig*.json ./
 COPY next.config.js ./
 COPY tailwind.config.js ./
 COPY postcss.config.js ./
 
-# Copie du code source
-COPY src ./src
-COPY app ./app
-COPY public ./public
+# Copie du reste des fichiers
+COPY . .
 
-# Génération du client Prisma et construction de l'application
+# Génération du client Prisma
 RUN npx prisma generate
+
+# Construction de l'application
+ENV NEXT_TELEMETRY_DISABLED=1
 RUN npm run build
 
 # Étape de production
@@ -39,11 +43,19 @@ COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
 
 # Configuration de l'environnement
-ENV NODE_ENV=production
+ENV NODE_ENV=development
+ENV APP_ENV=development
 ENV PORT=3000
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV WATCHPACK_POLLING=true
+
+# Script de démarrage qui régénère le client Prisma si nécessaire
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 # Exposition du port
 EXPOSE 3000
 
 # Démarrage de l'application
+ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["node", "server.js"]

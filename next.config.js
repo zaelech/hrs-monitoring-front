@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    output: "standalone",
+    output: 'standalone',
     experimental: {
         // Ajoutez ici d'autres configurations expérimentales si nécessaire
     },
@@ -17,4 +17,4 @@ const nextConfig = {
     },
 };
 
-export default nextConfig;
+module.exports = nextConfig;

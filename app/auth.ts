@@ -7,6 +7,14 @@ import type { Group, Permission } from "@/types/auth";
 import prisma from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 
+console.log('Current NODE_ENV:', process.env.NODE_ENV);
+
+// Logs de débogage
+console.log('=== DEBUG ENVIRONMENT ===');
+console.log('NODE_ENV:', process.env.NODE_ENV);
+console.log('Type of NODE_ENV:', typeof process.env.NODE_ENV);
+console.log('=== END DEBUG ===');
+
 // Extension du type JWT
 declare module "next-auth/jwt" {
     interface JWT {
@@ -21,14 +29,16 @@ export const config = {
     trustHost: true,
     cookies: {
         sessionToken: {
-            name: process.env.NODE_ENV === "production" ? `__Secure-next-auth.session-token` : `next-auth.session-token`,
+            name: process.env.APP_ENV === "production" ? `__Secure-next-auth.session-token` : `next-auth.session-token`,
             options: {
                 httpOnly: true,
                 sameSite: "lax",
                 path: "/",
-                secure: process.env.NODE_ENV === "production",
-                // Supprimons la configuration du domaine pour laisser NextAuth la gérer
-                // domain: process.env.NODE_ENV === "production" ? ".azurewebsites.net" : undefined,
+                secure: process.env.APP_ENV === "production",
+                // domain:
+                //     process.env.APP_ENV === "production"
+                //         ? ".azurewebsites.net" // domaine de production
+                //         : undefined, // pas de domaine en dev
             },
         },
     },
@@ -102,7 +112,10 @@ export const config = {
     ],
     callbacks: {
         async session({ session, token }) {
-            console.log("Session callback appelé", { sessionData: session, tokenData: token });
+            console.log("=========== SESSION CALLBACK ===========");
+            console.log("Session complète:", JSON.stringify(session));
+            console.log("Token complet:", JSON.stringify(token));
+            console.log("======================================");
             if (token && session.user) {
                 session.user.id = token.id as string;
                 session.user.groups = token.groups;
@@ -110,7 +123,12 @@ export const config = {
             return session;
         },
         async jwt({ token, user }) {
-            console.log("JWT callback appelé", { tokenData: token, userData: user });
+            console.log("============== JWT CALLBACK ============");
+            console.log("Token avant modification:", JSON.stringify(token));
+            console.log("User data:", JSON.stringify(user));
+            console.log("Environnement:", process.env.APP_ENV);
+            console.log("NEXTAUTH_URL:", process.env.NEXTAUTH_URL);
+            console.log("======================================");
             if (user) {
                 token.id = user.id;
                 token.groups = user.groups;
