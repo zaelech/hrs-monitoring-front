@@ -5,27 +5,30 @@ import { auth } from "./app/auth";
 
 export default auth((req) => {
     const pathname = req.nextUrl.pathname;
+    console.log("Middleware - pathname:", pathname);
 
-    // Ne pas rediriger les routes API
     if (pathname.startsWith("/api/")) {
+        console.log("Middleware - API route detected");
         return NextResponse.next();
     }
 
-    // Si on est à la racine, rediriger vers la langue par défaut
-    if (pathname === "/") {
-        return NextResponse.redirect(new URL(`/${defaultLanguage}`, req.url));
+    // Gérer d'abord la redirection de langue pour la page de login
+    if (pathname === "/fr/login") {
+        console.log("Middleware - Login page detected");
+        return NextResponse.next();
     }
 
-    // Vérifier si le chemin contient déjà un code de langue
     const pathnameIsMissingLocale = languages.every((locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`);
+    console.log("Middleware - Missing locale:", pathnameIsMissingLocale);
 
-    // Si le chemin n'a pas de locale, ajouter la langue par défaut
-    if (pathnameIsMissingLocale) {
-        return NextResponse.redirect(new URL(`/${defaultLanguage}${pathname}`, req.url));
+    if (pathname === "/" || pathnameIsMissingLocale) {
+        const locale = defaultLanguage;
+        const newUrl = new URL(`/${locale}${pathname === "/" ? "" : pathname}`, req.url);
+        newUrl.search = req.nextUrl.search;
+        console.log("Middleware - Redirecting to:", newUrl.toString());
+        return NextResponse.redirect(newUrl);
     }
-});
 
-// Configuration du matcher pour inclure les routes API et exclure les ressources statiques
-export const config = {
-    matcher: ["/((?!_next/static|_next/image|favicon.ico|.*\\..*).*))", "/api/:path*"],
-};
+    console.log("Middleware - Continuing to next middleware");
+    return NextResponse.next();
+});

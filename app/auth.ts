@@ -16,6 +16,22 @@ declare module "next-auth/jwt" {
 }
 
 export const config = {
+    basePath: "/api/auth",
+    secret: process.env.NEXTAUTH_SECRET,
+    trustHost: true,
+    cookies: {
+        sessionToken: {
+            name: process.env.NODE_ENV === "production" ? `__Secure-next-auth.session-token` : `next-auth.session-token`,
+            options: {
+                httpOnly: true,
+                sameSite: "lax",
+                path: "/",
+                secure: process.env.NODE_ENV === "production",
+                // Supprimons la configuration du domaine pour laisser NextAuth la gérer
+                // domain: process.env.NODE_ENV === "production" ? ".azurewebsites.net" : undefined,
+            },
+        },
+    },
     providers: [
         Credentials({
             credentials: {
@@ -23,11 +39,14 @@ export const config = {
                 password: { label: "Password", type: "password" },
             },
             async authorize(credentials, request: Request) {
+                console.log("Début de l'autorisation");
                 if (!credentials?.email || !credentials?.password) {
+                    console.log("Identifiants manquants");
                     return null;
                 }
 
                 try {
+                    console.log("Tentative de connexion à la base de données");
                     const user = await prisma.user.findUnique({
                         where: { email: credentials.email as string },
                         include: {
@@ -47,11 +66,15 @@ export const config = {
                         },
                     });
 
+                    console.log("Résultat de la recherche utilisateur:", user ? "Trouvé" : "Non trouvé");
+
                     if (!user) {
                         return null;
                     }
-
+                    console.log("Vérification du mot de passe");
                     const isPasswordValid = await bcrypt.compare(credentials.password as string, user.password);
+
+                    console.log("Mot de passe valide:", isPasswordValid);
 
                     if (!isPasswordValid) {
                         return null;
@@ -71,32 +94,28 @@ export const config = {
 
                     return transformedUser;
                 } catch (error) {
-                    console.error("Erreur lors de l'authentification:", error);
+                    console.error("Erreur détailléelors de l'authentification:", error);
                     return null;
                 }
             },
         }),
     ],
     callbacks: {
-        async session({ session, token }: { session: Session; token: JWT }) {
+        async session({ session, token }) {
+            console.log("Session callback appelé", { sessionData: session, tokenData: token });
             if (token && session.user) {
                 session.user.id = token.id as string;
                 session.user.groups = token.groups;
             }
             return session;
         },
-        async jwt({ token, user }: { token: JWT; user?: User }) {
+        async jwt({ token, user }) {
+            console.log("JWT callback appelé", { tokenData: token, userData: user });
             if (user) {
                 token.id = user.id;
                 token.groups = user.groups;
             }
             return token;
-        },
-        async redirect({ url, baseUrl }) {
-            // Si l'URL commence par le baseUrl, on la retourne telle quelle
-            if (url.startsWith(baseUrl)) return url;
-            // Sinon on redirige vers la page d'accueil
-            return baseUrl;
         },
     },
     pages: {
