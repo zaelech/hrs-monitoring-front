@@ -17,7 +17,7 @@ const Header = ({ lng }: HeaderProps) => {
     }, []);
 
     return (
-        <header className="h-12 bg-[#FF6600] fixed top-0 left-0 right-0 z-50 flex items-center px-4">
+        <header className="h-12 bg-primary fixed top-0 left-0 right-0 z-50 flex items-center px-4">
             <Link href={`/${lng}`} className="flex items-center">
                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 654.5 453.1" className="h-6">
                     <g fill="#fff">
@@ -26,9 +26,7 @@ const Header = ({ lng }: HeaderProps) => {
                         <path d="M415.9,214.4v-13.8c0-39.8-32.2-72-72-72H220.1v6.9v188.9h85.8v-110L415.9,214.4L415.9,214.4z"></path>
                     </g>
                 </svg>
-                <h1 className="ml-4 text-white font-medium">
-                    {isClient ? t("title") : "Monitoring de Projet"}
-                </h1>
+                <h1 className="ml-4 text-white font-medium">{isClient ? t("title") : "Monitoring de Projet"}</h1>
             </Link>
             <LanguageSwitcher lng={lng} />
         </header>

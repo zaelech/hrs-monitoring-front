@@ -1,0 +1,16 @@
+{
+    "sip": "SIP",
+    "tender": "Appel d'offres",
+    "contract": "Contrat",
+    "partners": "Partenaires",
+    "partner": "Partenaire",
+    "overview": "Vue d'ensemble",
+    "dev": "DEV",
+    "prospection": "Prospection",
+    "administration": "Administration",
+    "userManagement": "Gestion des utilisateurs",
+    "localityManagement": "Gestion des localités",
+    "partnerManagement": "Gestion des partenaires",
+    "projectManagement": "Gestion des projets",
+    "customerManagement": "Gestion des clients"
+}

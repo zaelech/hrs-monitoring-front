@@ -43,31 +43,33 @@ const menuItems: MenuItem[] = [
         items: [
             { title: "userManagement", href: "/admin/users" },
             { title: "partnerManagement", href: "/admin/partners" },
-            { title: "projectManagement", href: "/admin/projects" },
+            { title: "projectManagement", href: "/projects" },
+            { title: "localityManagement", href: "/reference-data/localities" },
+            { title: "customerManagement", href: "/customers" },
         ],
     },
 ];
 
 const Sidebar = ({ lng }: SidebarProps) => {
     const { data: session } = useSession();
-    const { t } = useTranslation(lng, "common");
+    const { t } = useTranslation(lng, "navigation");
     const router = useRouter();
 
     const handleSignOut = async () => {
-        await signOut({ 
-            redirect: false
+        await signOut({
+            redirect: false,
         });
         router.push(`/${lng}/login`);
         router.refresh();
     };
 
     return (
-        <div className="w-64 bg-white border-r border-gray-200 fixed left-0 top-12 bottom-0 flex flex-col">
+        <div className="w-64 bg-secondary border-r border-gray-200 fixed left-0 top-12 bottom-0 flex flex-col">
             <div className="flex-1 overflow-y-auto">
                 <nav className="p-4 space-y-4">
                     {menuItems.map((section, index) => (
                         <div key={index} className="space-y-1">
-                            <div className="flex items-center gap-2 p-2 bg-[#FFE5CC] rounded-lg text-[#FF6600] font-medium">
+                            <div className="flex items-center gap-2 p-2 bg-content rounded-lg text-primary dark:text-primary-dark font-medium">
                                 <span>{t(section.title)}</span>
                                 <ChevronDown className="h-4 w-4" />
                             </div>
@@ -77,7 +79,7 @@ const Sidebar = ({ lng }: SidebarProps) => {
                                         <Link
                                             key={idx}
                                             href={`/${lng}${item.href}`}
-                                            className="block w-full text-left p-2 text-sm text-gray-600 hover:bg-gray-50 rounded-lg transition-colors"
+                                            className="block w-full text-left p-2 text-sm text-white hover:text-classic transition-colors"
                                         >
                                             <span>{t(item.title)}</span>
                                         </Link>
@@ -105,6 +107,6 @@ const Sidebar = ({ lng }: SidebarProps) => {
             )}
         </div>
     );
-}
+};
 
 export default Sidebar;

@@ -46,4 +46,4 @@ ENV PORT=3000
 EXPOSE 3000
 
 # Démarrage de l'application
-CMD ["node", "server.js"]
+CMD echo "NODE_ENV=$NODE_ENV" && node server.js

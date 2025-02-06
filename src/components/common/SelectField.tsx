@@ -7,23 +7,16 @@ interface Option {
 
 interface SelectFieldProps {
     label: string;
-    name: string;
+    name?: string;
     value: string;
     onChange: (value: string) => void;
     options: Option[];
     placeholder?: string;
     disabled?: boolean;
+    required?: boolean;
 }
 
-export const SelectField: React.FC<SelectFieldProps> = ({
-    label,
-    name,
-    value,
-    onChange,
-    options,
-    placeholder,
-    disabled = false,
-}) => {
+export const SelectField: React.FC<SelectFieldProps> = ({ label, name, value, onChange, options, placeholder, disabled = false, required = false }) => {
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         onChange(e.target.value);
     };
@@ -43,7 +36,8 @@ export const SelectField: React.FC<SelectFieldProps> = ({
                         value={value}
                         onChange={handleChange}
                         disabled={disabled}
-                        className={`block w-full rounded-md border-0 p-1.5 text-gray-900 bg-[#FFE5CC] ring-inset focus:ring-2 focus:ring-inset focus:ring-[#FF6600] sm:text-sm sm:leading-6 h-[38px] ${
+                        required={required}
+                        className={`appearance-none block w-full rounded-md border-0 p-1.5 text-gray-900 bg-white ring-inset focus:ring-2 focus:ring-inset focus:ring-white sm:text-sm sm:leading-6 h-[38px] ${
                             disabled ? "bg-gray-100 cursor-not-allowed" : ""
                         }`}
                     >

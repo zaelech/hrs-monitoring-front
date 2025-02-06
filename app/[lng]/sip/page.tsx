@@ -3,6 +3,7 @@ import { ChevronRight } from "lucide-react";
 import ProjectTable from "@/components/ProjectTable";
 import { projects } from "@/data/projects";
 import { useTranslation } from "@/../app/i18n/client";
+import { use } from "react";
 
 interface PageProps {
     params: Promise<{
@@ -10,9 +11,10 @@ interface PageProps {
     }>;
 }
 
-async function SIP({ params }: PageProps) {
-    const { lng } = await params;
+export default function SIP({ params }: PageProps) {
+    const { lng } = use(params);
     const { t } = useTranslation(lng, "common");
+
     return (
         <div className="max-w-7xl mx-auto px-4 py-8">
             <div className="mb-8">
@@ -23,10 +25,6 @@ async function SIP({ params }: PageProps) {
                 </div>
                 <h1 className="text-3xl font-bold text-gray-900">{t("sip")}</h1>
             </div>
-
-            <ProjectTable projects={projects} lng={lng} />
         </div>
     );
 }
-
-export default SIP;

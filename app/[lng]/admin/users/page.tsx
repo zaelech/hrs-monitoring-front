@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useTranslation } from "@/../app/i18n/client";
 import { WithPermission } from "@/components/WithPermission";
 import { User, Group } from "@prisma/client";
+import { PageHeader } from "@/components/common/PageHeader";
 
 interface PageProps {
     params: Promise<{
@@ -19,14 +20,13 @@ type UserWithGroups = User & {
 };
 
 function UsersPageClient({ lng }: { lng: string }) {
-    const { t } = useTranslation(lng, "common");
+    const { t } = useTranslation(lng, "user");
     const [users, setUsers] = useState<UserWithGroups[]>([]);
     const [groups, setGroups] = useState<Group[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-
-    // États pour le formulaire de création
-    const [newUser, setNewUser] = useState({
+    const [editingUser, setEditingUser] = useState<UserWithGroups | null>(null);
+    const [formData, setFormData] = useState({
         name: "",
         email: "",
         password: "",
@@ -61,29 +61,62 @@ function UsersPageClient({ lng }: { lng: string }) {
         fetchGroups();
     }, []);
 
+    useEffect(() => {
+        if (editingUser) {
+            setFormData({
+                name: editingUser.name,
+                email: editingUser.email,
+                password: "", // On ne remplit pas le mot de passe pour des raisons de sécurité
+                groupIds: editingUser.groups.map((g) => g.group.id),
+            });
+        } else {
+            setFormData({
+                name: "",
+                email: "",
+                password: "",
+                groupIds: [],
+            });
+        }
+    }, [editingUser]);
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        fetch("/api/users", {
-            method: "POST",
+        const url = editingUser ? `/api/users/${editingUser.id}` : "/api/users";
+        const method = editingUser ? "PUT" : "POST";
+
+        fetch(url, {
+            method,
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(newUser),
+            body: JSON.stringify(formData),
         })
             .then((response) => {
-                if (!response.ok) throw new Error("Erreur lors de la création de l'utilisateur");
+                if (!response.ok)
+                    throw new Error(editingUser ? "Erreur lors de la mise à jour de l'utilisateur" : "Erreur lors de la création de l'utilisateur");
             })
             .then(() => {
                 // Réinitialiser le formulaire et recharger les utilisateurs
-                setNewUser({
+                setFormData({
                     name: "",
                     email: "",
                     password: "",
                     groupIds: [],
                 });
+                setEditingUser(null);
                 fetchUsers();
             })
             .catch((err) => setError(err instanceof Error ? err.message : "Une erreur est survenue"));
+    };
+
+    const handleCancel = () => {
+        setEditingUser(null);
+        setFormData({
+            name: "",
+            email: "",
+            password: "",
+            groupIds: [],
+        });
     };
 
     if (loading) return <div className="p-4">Chargement...</div>;
@@ -92,19 +125,19 @@ function UsersPageClient({ lng }: { lng: string }) {
     return (
         <WithPermission permission="MANAGE_USERS" fallback={<div className="p-4">Accès non autorisé</div>}>
             <div className="p-4">
-                <h1 className="text-2xl font-bold mb-6">Gestion des utilisateurs</h1>
+                <PageHeader items={[]} currentLabel={t("title")} title={t("title")} lng={lng} />
 
                 {/* Formulaire de création d'utilisateur */}
-                <div className="bg-white p-6 rounded-lg shadow-md mb-6">
-                    <h2 className="text-xl font-semibold mb-4">Créer un nouvel utilisateur</h2>
+                <div className="bg-surface p-6 rounded-lg shadow-md mb-6">
+                    <h2 className="text-xl font-semibold mb-4">{editingUser ? "Modifier l'utilisateur" : "Créer un nouvel utilisateur"}</h2>
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <div>
                             <label className="block text-sm font-medium text-gray-700">
                                 Nom
                                 <input
                                     type="text"
-                                    value={newUser.name}
-                                    onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
+                                    value={formData.name}
+                                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                                     required
                                 />
@@ -115,8 +148,8 @@ function UsersPageClient({ lng }: { lng: string }) {
                                 Email
                                 <input
                                     type="email"
-                                    value={newUser.email}
-                                    onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
+                                    value={formData.email}
+                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                                     required
                                 />
@@ -124,13 +157,13 @@ function UsersPageClient({ lng }: { lng: string }) {
                         </div>
                         <div>
                             <label className="block text-sm font-medium text-gray-700">
-                                Mot de passe
+                                {editingUser ? "Nouveau mot de passe (laisser vide pour ne pas changer)" : "Mot de passe"}
                                 <input
                                     type="password"
-                                    value={newUser.password}
-                                    onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
+                                    value={formData.password}
+                                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                                    required
+                                    required={!editingUser}
                                 />
                             </label>
                         </div>
@@ -139,10 +172,10 @@ function UsersPageClient({ lng }: { lng: string }) {
                                 Groupes
                                 <select
                                     multiple
-                                    value={newUser.groupIds}
+                                    value={formData.groupIds}
                                     onChange={(e) =>
-                                        setNewUser({
-                                            ...newUser,
+                                        setFormData({
+                                            ...formData,
                                             groupIds: Array.from(e.target.selectedOptions, (option) => option.value),
                                         })
                                     }
@@ -156,12 +189,23 @@ function UsersPageClient({ lng }: { lng: string }) {
                                 </select>
                             </label>
                         </div>
-                        <button
-                            type="submit"
-                            className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                        >
-                            Créer l'utilisateur
-                        </button>
+                        <div className="flex gap-2">
+                            <button
+                                type="submit"
+                                className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                            >
+                                {editingUser ? "Mettre à jour" : "Créer l'utilisateur"}
+                            </button>
+                            {editingUser && (
+                                <button
+                                    type="button"
+                                    onClick={handleCancel}
+                                    className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+                                >
+                                    Annuler
+                                </button>
+                            )}
+                        </div>
                     </form>
                 </div>
 
@@ -173,6 +217,7 @@ function UsersPageClient({ lng }: { lng: string }) {
                                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
                                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
                                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Groupes</th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                             </tr>
                         </thead>
                         <tbody className="bg-white divide-y divide-gray-200">
@@ -181,6 +226,11 @@ function UsersPageClient({ lng }: { lng: string }) {
                                     <td className="px-6 py-4 whitespace-nowrap">{user.name}</td>
                                     <td className="px-6 py-4 whitespace-nowrap">{user.email}</td>
                                     <td className="px-6 py-4 whitespace-nowrap">{user.groups.map((g) => g.group.name).join(", ")}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap">
+                                        <button onClick={() => setEditingUser(user)} className="text-indigo-600 hover:text-indigo-900">
+                                            Modifier
+                                        </button>
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>

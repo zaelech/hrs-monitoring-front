@@ -21,14 +21,13 @@ export const config = {
     trustHost: true,
     cookies: {
         sessionToken: {
-            name: process.env.NODE_ENV === "production" ? `__Secure-next-auth.session-token` : `next-auth.session-token`,
+            name: process.env.NEXT_ENVIRONMENT === "production" ? `__Secure-next-auth.session-token` : `next-auth.session-token`,
             options: {
                 httpOnly: true,
                 sameSite: "lax",
                 path: "/",
-                secure: process.env.NODE_ENV === "production",
-                // Supprimons la configuration du domaine pour laisser NextAuth la gérer
-                // domain: process.env.NODE_ENV === "production" ? ".azurewebsites.net" : undefined,
+                secure: process.env.NEXT_ENVIRONMENT === "production",
+                // domain sera géré automatiquement par NextAuth
             },
         },
     },
@@ -40,6 +39,8 @@ export const config = {
             },
             async authorize(credentials, request: Request) {
                 console.log("Début de l'autorisation");
+                console.log("Environnement:", process.env.NEXT_ENVIRONMENT);
+                console.log("NEXTAUTH_URL:", process.env.NEXTAUTH_URL);
                 if (!credentials?.email || !credentials?.password) {
                     console.log("Identifiants manquants");
                     return null;
@@ -94,7 +95,7 @@ export const config = {
 
                     return transformedUser;
                 } catch (error) {
-                    console.error("Erreur détailléelors de l'authentification:", error);
+                    console.error("Erreur détaillée lors de l'authentification:", error);
                     return null;
                 }
             },
@@ -102,7 +103,10 @@ export const config = {
     ],
     callbacks: {
         async session({ session, token }) {
-            console.log("Session callback appelé", { sessionData: session, tokenData: token });
+            console.log("=========== SESSION CALLBACK ===========");
+            console.log("Session complète:", JSON.stringify(session));
+            console.log("Token complet:", JSON.stringify(token));
+            console.log("======================================");
             if (token && session.user) {
                 session.user.id = token.id as string;
                 session.user.groups = token.groups;
@@ -110,7 +114,12 @@ export const config = {
             return session;
         },
         async jwt({ token, user }) {
-            console.log("JWT callback appelé", { tokenData: token, userData: user });
+            console.log("============== JWT CALLBACK ============");
+            console.log("Token avant modification:", JSON.stringify(token));
+            console.log("User data:", JSON.stringify(user));
+            console.log("Environnement:", process.env.NEXT_ENVIRONMENT);
+            console.log("NEXTAUTH_URL:", process.env.NEXTAUTH_URL);
+            console.log("======================================");
             if (user) {
                 token.id = user.id;
                 token.groups = user.groups;

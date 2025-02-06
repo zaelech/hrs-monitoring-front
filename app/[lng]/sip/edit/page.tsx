@@ -139,19 +139,19 @@ function SIPEdit({ params }: PageProps) {
     return (
         <div className="max-w-7xl mx-auto px-4 py-8">
             <div className="mb-8">
-                <div className="text-sm text-gray-500 mb-2 flex items-center gap-2">
+                <div className="text-sm text-primary-500 mb-2 flex items-center gap-2">
                     <span>Projects</span>
-                    <ChevronRight size={16} className="text-gray-400" />
+                    <ChevronRight size={16} className="text-primary-400" />
                     <span>Édition SIP</span>
                 </div>
                 <Title variant="h1">Édition SIP</Title>
             </div>
 
-            <form className="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2">
+            <form className="bg-surface shadow-sm ring-1 ring-gray-900/5 sm:rounded-lg md:col-span-2">
                 <div className="px-4 py-6 sm:p-8">
                     <div className="grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-6">
                         <div className="sm:col-span-6">
-                            <Title variant="h3" className="bg-[#FF6600] text-white text-center p-2">
+                            <Title variant="h3" className="bg-secondary text-white text-center p-2">
                                 {t("donneesDeBase")}
                             </Title>
                         </div>
@@ -160,7 +160,7 @@ function SIPEdit({ params }: PageProps) {
                         <div className="flex flex-col gap-2">
                             <span className="font-medium">{t("ressourcesHrs")}</span>
                             <button type="button" className="border-solid border-2 border-[#FF6600] text-[#FF6600] text-sm px-3 py-1 rounded w-fit">
-                            {t("ajouter")}
+                                {t("ajouter")}
                             </button>
                         </div>
                         <div className="sm:col-span-5">
@@ -169,7 +169,7 @@ function SIPEdit({ params }: PageProps) {
                         <div className="flex flex-col gap-2">
                             <span className="font-medium">{t("prestataires")}</span>
                             <button type="button" className="border-solid border-2 border-[#FF6600] text-[#FF6600] text-sm px-3 py-1 rounded w-fit">
-                            {t("ajouter")}
+                                {t("ajouter")}
                             </button>
                         </div>
                         <div className="sm:col-span-5">
@@ -220,7 +220,7 @@ function SIPEdit({ params }: PageProps) {
                             currency={true}
                         />
                         <div className="sm:col-span-6">
-                            <Title variant="h3" className="bg-[#FF6600] text-white text-center p-2">
+                            <Title variant="h3" className="bg-secondary text-white text-center p-2">
                                 {t("controlling")}
                             </Title>
                         </div>
@@ -277,7 +277,7 @@ function SIPEdit({ params }: PageProps) {
                             currency={true}
                         />
                         <div className="sm:col-span-6">
-                            <Title variant="h3" className="bg-[#FF6600] text-white text-center p-2">
+                            <Title variant="h3" className="bg-secondary text-white text-center p-2">
                                 {t("liquidite")}
                             </Title>
                         </div>
@@ -302,7 +302,14 @@ function SIPEdit({ params }: PageProps) {
                             onChange={handleChange("montantPayeParMo")}
                             currency={true}
                         />
-                        <InputField label={t("liquidite")} name="liquidite" value={liquidite().toFixed(2)} onChange={() => {}} disabled={true} currency={true} />
+                        <InputField
+                            label={t("liquidite")}
+                            name="liquidite"
+                            value={liquidite().toFixed(2)}
+                            onChange={() => {}}
+                            disabled={true}
+                            currency={true}
+                        />
                         <InputField
                             label={t("retardPaiementMO")}
                             name="retardPaiementMO"
@@ -320,7 +327,7 @@ function SIPEdit({ params }: PageProps) {
                         />
 
                         <div className="sm:col-span-6">
-                            <Title variant="h3" className="bg-[#FF6600] text-white text-center p-2">
+                            <Title variant="h3" className="bg-secondary text-white text-center p-2">
                                 {t("gestionPpe")}
                             </Title>
                         </div>
@@ -367,7 +374,7 @@ function SIPEdit({ params }: PageProps) {
                             currency={true}
                         />
                         <div className="sm:col-span-6">
-                            <Title variant="h3" className="bg-[#FF6600] text-white text-center p-2">
+                            <Title variant="h3" className="bg-secondary text-white text-center p-2">
                                 {t("avenantsMo")}
                             </Title>
                         </div>
@@ -386,7 +393,7 @@ function SIPEdit({ params }: PageProps) {
                             currency={true}
                         />
                         <div className="sm:col-span-6">
-                            <Title variant="h3" className="bg-[#FF6600] text-white text-center p-2">
+                            <Title variant="h3" className="bg-secondary text-white text-center p-2">
                                 {t("adjudications")}
                             </Title>
                         </div>
@@ -403,13 +410,13 @@ function SIPEdit({ params }: PageProps) {
                             onChange={handleChange("cfcEnPreparation")}
                         />
                         <div className="sm:col-span-3">
-                            <Title variant="h3" className="bg-[#FF6600] text-white text-center p-2">
+                            <Title variant="h3" className="bg-secondary text-white text-center p-2">
                                 {t("delais")}
                             </Title>
                         </div>
 
                         <div className="sm:col-span-3">
-                            <Title variant="h3" className="bg-[#FF6600] text-white text-center p-2">
+                            <Title variant="h3" className="bg-secondary text-white text-center p-2">
                                 {t("securite")}
                             </Title>
                         </div>
@@ -441,12 +448,12 @@ function SIPEdit({ params }: PageProps) {
                             rows={4}
                         />
                         <div className="sm:col-span-3">
-                            <Title variant="h3" className="bg-[#FF6600] text-white text-center p-2">
+                            <Title variant="h3" className="bg-secondary text-white text-center p-2">
                                 {t("planificationMandataires")}
                             </Title>
                         </div>
                         <div className="sm:col-span-3">
-                            <Title variant="h3" className="bg-[#FF6600] text-white text-center p-2">
+                            <Title variant="h3" className="bg-secondary text-white text-center p-2">
                                 {t("problemesSousTraitants")}
                             </Title>
                         </div>
@@ -463,7 +470,7 @@ function SIPEdit({ params }: PageProps) {
                             rows={4}
                         />
                         <div className="sm:col-span-6">
-                            <Title variant="h3" className="bg-[#FF6600] text-white text-center p-2">
+                            <Title variant="h3" className="bg-secondary text-white text-center p-2">
                                 {t("annexes")}
                             </Title>
                         </div>

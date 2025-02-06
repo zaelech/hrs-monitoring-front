@@ -1,9 +1,15 @@
 {
     "title": "Clients",
     "edit": "Editer",
+    "new": "Nouveau",
     "customerEdit": "Editer le client",
+    "customerNew": "Nouveau client",
     "name": "Nom",
     "address": "Adresse",
     "comments": "Commentaires",
-    "number": "N°"
+    "number": "N°",
+    "save": "Enregistrer",
+    "saving": "Enregistrement...",
+    "cancel": "Annuler",
+    "filter": "Filtrer"
 }

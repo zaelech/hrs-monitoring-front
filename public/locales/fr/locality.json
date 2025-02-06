@@ -1,16 +1,20 @@
 {
+    "referenceData": "Données de référence",
+    "localities": "Localités",
     "title": "Localité",
     "edit": "Editer",
-    "localityEdit": "Editer la localité",
+    "editLocality": "Editer la localité",
     "lieu": "Lieu",
     "npa": "NPA",
     "numero": "Numéro",
     "municipalite": "Municipalité",
     "bfsNr": "N° BFS",
-    "cantion": "Canton",
-    "e": "E",
-    "n": "N",
-    "langue": "Langue",
-    "validite": "Validité",
-    "locality": "Localité"
+    "canton": "Canton",
+    "coordinateN": "N",
+    "coordinateE": "E",
+    "language": "Langue",
+    "validity": "Validité",
+    "locality": "Localité",
+    "valid": "Valide",
+    "invalid": "Invalide"
 }

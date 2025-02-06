@@ -10,15 +10,7 @@ interface TextAreaFieldProps {
     rows?: number;
 }
 
-export const TextAreaField: React.FC<TextAreaFieldProps> = ({
-    label,
-    name,
-    value,
-    onChange,
-    placeholder,
-    disabled = false,
-    rows = 3
-}) => {
+export const TextAreaField: React.FC<TextAreaFieldProps> = ({ label, name, value, onChange, placeholder, disabled = false, rows = 3 }) => {
     return (
         <>
             {label && (
@@ -38,7 +30,7 @@ export const TextAreaField: React.FC<TextAreaFieldProps> = ({
                         onChange={(e) => onChange(e.target.value)}
                         placeholder={placeholder}
                         disabled={disabled}
-                        className={`block w-full rounded-md border-0 p-1.5 text-gray-900 bg-[#FFE5CC] ring-inset placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#FF6600] sm:text-sm sm:leading-6 ${
+                        className={`block w-full rounded-md border-0 p-1.5 text-gray-900 bg-white ring-inset placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#FF6600] sm:text-sm sm:leading-6 ${
                             disabled ? "bg-gray-100 cursor-not-allowed" : ""
                         }`}
                     />

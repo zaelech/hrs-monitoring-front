@@ -34,11 +34,15 @@ export default function LoginPage({ params }: LoginPageProps) {
                 redirect: false,
             });
 
+            console.log(result);
+
             if (result?.error) {
                 setError(t("invalidCredentials"));
             } else if (result?.ok) {
+                console.log("result ok");
                 // Attendre un court instant pour s'assurer que la session est bien mise à jour
-                await new Promise(resolve => setTimeout(resolve, 500));
+                await new Promise((resolve) => setTimeout(resolve, 1000));
+                console.log("Redirection vers la page d'accueil");
                 router.push(`/${lng}`);
                 router.refresh();
             }
@@ -56,7 +60,7 @@ export default function LoginPage({ params }: LoginPageProps) {
                 <div className="mb-8 text-center">
                     <h1 className="text-3xl font-bold">{t("loginTitle")}</h1>
                 </div>
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="bg-surface space-y-6 p-6">
                     <div>
                         <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                             {t("email")}
@@ -100,7 +104,7 @@ export default function LoginPage({ params }: LoginPageProps) {
                     <button
                         type="submit"
                         disabled={isLoading}
-                        className="w-full rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"
+                        className="w-full rounded-md bg-content px-4 py-2 text-white hover:bg-content-hover focus:outline-none focus:ring-2 focus:ring-content-hover focus:ring-offset-2 disabled:opacity-50"
                     >
                         {isLoading ? t("loading") : t("login")}
                     </button>

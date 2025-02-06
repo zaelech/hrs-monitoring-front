@@ -20,7 +20,7 @@ export default async function Layout({ children, params }: LayoutProps) {
     const { lng } = await params;
 
     return (
-        <div className={`min-h-screen bg-gray-50/50 ${inter.className}`}>
+        <div className={`min-h-screen bg-classic ${inter.className}`}>
             <Providers>
                 <LayoutWrapper lng={lng}>{children}</LayoutWrapper>
             </Providers>

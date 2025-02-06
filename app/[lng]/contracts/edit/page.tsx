@@ -98,7 +98,7 @@ function ContractEdit({ params }: PageProps) {
                 </div>
                 <Title variant="h1">{t("contractEdit")}</Title>
             </div>
-            <form className="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2">
+            <form className="bg-surface shadow-sm ring-1 ring-gray-900/5 sm:rounded-lg md:col-span-2">
                 <div className="px-4 py-6 sm:p-8">
                     <div className="grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-6">
                         <div className="sm:col-span-6">
@@ -106,20 +106,8 @@ function ContractEdit({ params }: PageProps) {
                                 {t("Contract")}
                             </Title>
                         </div>
-                        <InputField
-                            label={t("subProject")}
-                            name="subProject"
-                            type="text"
-                            value={formData.subProject}
-                            onChange={handleChange("subProject")}
-                        />
-                        <InputField
-                            label={t("cfc")}
-                            name="cfc"
-                            type="text"
-                            value={formData.cfc}
-                            onChange={handleChange("cfc")}
-                        />
+                        <InputField label={t("subProject")} name="subProject" type="text" value={formData.subProject} onChange={handleChange("subProject")} />
+                        <InputField label={t("cfc")} name="cfc" type="text" value={formData.cfc} onChange={handleChange("cfc")} />
                         <InputField
                             label={t("contactResp")}
                             name="contactResp"
@@ -157,20 +145,8 @@ function ContractEdit({ params }: PageProps) {
                             ]}
                             placeholder={t("selectionnezUneOption")}
                         />
-                        <InputField
-                            label={t("prixHt")}
-                            name="prixHt"
-                            type="text"
-                            value={formData.prixHt}
-                            onChange={handleChange("prixHt")}
-                        />
-                        <InputField
-                            label={t("prixTtc")}
-                            name="prixTtc"
-                            type="text"
-                            value={formData.prixTtc}
-                            onChange={handleChange("prixTtc")}
-                        />
+                        <InputField label={t("prixHt")} name="prixHt" type="text" value={formData.prixHt} onChange={handleChange("prixHt")} />
+                        <InputField label={t("prixTtc")} name="prixTtc" type="text" value={formData.prixTtc} onChange={handleChange("prixTtc")} />
                         <InputField
                             label={t("confCommEnvoyeeLe")}
                             name="confCommEnvoyeeLe"
@@ -222,32 +198,14 @@ function ContractEdit({ params }: PageProps) {
                                 {t("WIR")}
                             </Title>
                         </div>
-                        <InputField
-                            label={t("wirMontant")}
-                            name="wirMontant"
-                            type="text"
-                            value={formData.wirMontant}
-                            onChange={handleChange("wirMontant")}
-                        />
-                        <InputField
-                            label={t("wirDate")}
-                            name="wirDate"
-                            type="date"
-                            value={formData.wirDate}
-                            onChange={handleChange("wirDate")}
-                        />
+                        <InputField label={t("wirMontant")} name="wirMontant" type="text" value={formData.wirMontant} onChange={handleChange("wirMontant")} />
+                        <InputField label={t("wirDate")} name="wirDate" type="date" value={formData.wirDate} onChange={handleChange("wirDate")} />
                         <div className="sm:col-span-6">
                             <Title variant="h3" className="bg-[#FF6600] text-white text-center p-2">
                                 {t("Garantie")}
                             </Title>
                         </div>
-                        <InputField
-                            label={t("gbeMontant")}
-                            name="gbeMontant"
-                            type="text"
-                            value={formData.gbeMontant}
-                            onChange={handleChange("gbeMontant")}
-                        />
+                        <InputField label={t("gbeMontant")} name="gbeMontant" type="text" value={formData.gbeMontant} onChange={handleChange("gbeMontant")} />
                         <InputField
                             label={t("gbeEcheance")}
                             name="gbeEcheance"
@@ -281,13 +239,7 @@ function ContractEdit({ params }: PageProps) {
                                 {t("Décompte")}
                             </Title>
                         </div>
-                        <InputField
-                            label={t("decResp")}
-                            name="dec_Resp"
-                            type="text"
-                            value={formData.dec_Resp}
-                            onChange={handleChange("dec_Resp")}
-                        />
+                        <InputField label={t("decResp")} name="dec_Resp" type="text" value={formData.dec_Resp} onChange={handleChange("dec_Resp")} />
                         <InputField
                             label={t("montantDfNetHt")}
                             name="montantDfNetHt"
@@ -302,20 +254,8 @@ function ContractEdit({ params }: PageProps) {
                             value={formData.soldeDfNetHt}
                             onChange={handleChange("soldeDfNetHt")}
                         />
-                        <InputField
-                            label={t("envoi")}
-                            name="envoi"
-                            type="date"
-                            value={formData.envoi}
-                            onChange={handleChange("envoi")}
-                        />
-                        <InputField
-                            label={t("signe")}
-                            name="signe"
-                            type="date"
-                            value={formData.signe}
-                            onChange={handleChange("signe")}
-                        />
+                        <InputField label={t("envoi")} name="envoi" type="date" value={formData.envoi} onChange={handleChange("envoi")} />
+                        <InputField label={t("signe")} name="signe" type="date" value={formData.signe} onChange={handleChange("signe")} />
                         <InputField
                             label={t("gDftMontant")}
                             name="g_Dft_Montant"
@@ -323,13 +263,7 @@ function ContractEdit({ params }: PageProps) {
                             value={formData.g_Dft_Montant}
                             onChange={handleChange("g_Dft_Montant")}
                         />
-                        <InputField
-                            label={t("gDftRecu")}
-                            name="g_Dft_reçu"
-                            type="date"
-                            value={formData.g_Dft_reçu}
-                            onChange={handleChange("g_Dft_reçu")}
-                        />
+                        <InputField label={t("gDftRecu")} name="g_Dft_reçu" type="date" value={formData.g_Dft_reçu} onChange={handleChange("g_Dft_reçu")} />
                     </div>
                 </div>
             </form>

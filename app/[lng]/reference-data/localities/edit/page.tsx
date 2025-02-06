@@ -100,7 +100,7 @@ function LocalityEdit({ params }: PageProps) {
                 </div>
                 <Title variant="h1">{t("localityEdit")}</Title>
             </div>
-            <form className="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2" onSubmit={handleSubmit}>
+            <form className="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-lg md:col-span-2" onSubmit={handleSubmit}>
                 <div className="px-4 py-6 sm:p-8">
                     <div className="grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-6">
                         <div className="sm:col-span-6">

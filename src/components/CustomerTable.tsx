@@ -3,35 +3,31 @@ import { MoreHorizontal, ChevronDown, ChevronUp, Search, Filter, Edit } from "lu
 import { useTranslation } from "@/../app/i18n/client";
 import Link from "next/link";
 
-export interface Project {
+export interface Customer {
     id: number;
     number: number;
-    parcel: string;
-    location: {
-        id: number;
-        place: string;
-        canton: string;
-    };
+    name: string;
+    address: string;
+    comment?: string;
 }
 
-interface ProjectTableProps {
+interface CustomerTableProps {
     lng: string;
-    projects: Project[];
+    customers: Customer[];
 }
 
-const ProjectTable = ({ lng, projects }: ProjectTableProps) => {
-    const { t } = useTranslation(lng, "project");
-    const [sortField, setSortField] = useState<string | null>(null);
+const CustomerTable = ({ lng, customers }: CustomerTableProps) => {
+    const { t } = useTranslation(lng, "customer");
+    const [sortField, setSortField] = useState<keyof Customer | null>(null);
     const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
     const [filters, setFilters] = useState({
         number: "",
-        canton: "",
-        location: "",
-        parcel: "",
+        name: "",
+        address: "",
     });
     const [activeDropdown, setActiveDropdown] = useState<number | null>(null);
 
-    const handleSort = (field: string) => {
+    const handleSort = (field: keyof Customer) => {
         if (sortField === field) {
             setSortDirection(sortDirection === "asc" ? "desc" : "asc");
         } else {
@@ -44,7 +40,7 @@ const ProjectTable = ({ lng, projects }: ProjectTableProps) => {
         setFilters((prev) => ({ ...prev, [field]: value }));
     };
 
-    const SortIcon = ({ field }: { field: string }) => {
+    const SortIcon = ({ field }: { field: keyof Customer }) => {
         if (sortField !== field) return null;
         return sortDirection === "asc" ? <ChevronUp size={16} /> : <ChevronDown size={16} />;
     };
@@ -53,30 +49,46 @@ const ProjectTable = ({ lng, projects }: ProjectTableProps) => {
         setActiveDropdown(activeDropdown === id ? null : id);
     };
 
-    const filteredProjects = projects.filter((project) => {
+    const filteredCustomers = customers.filter((customer) => {
         return (
-            project.number.toString().toLowerCase().includes(filters.number.toLowerCase()) &&
-            project.location.canton.toLowerCase().includes(filters.canton.toLowerCase()) &&
-            project.location.place.toLowerCase().includes(filters.location.toLowerCase()) &&
-            project.parcel.toLowerCase().includes(filters.parcel.toLowerCase())
+            customer.number.toString().includes(filters.number) &&
+            customer.name.toLowerCase().includes(filters.name.toLowerCase()) &&
+            customer.address.toLowerCase().includes(filters.address.toLowerCase())
         );
+    });
+
+    const sortedCustomers = [...filteredCustomers].sort((a, b) => {
+        if (!sortField) return 0;
+        
+        const aValue = a[sortField];
+        const bValue = b[sortField];
+
+        if (typeof aValue === 'number' && typeof bValue === 'number') {
+            return sortDirection === 'asc' ? aValue - bValue : bValue - aValue;
+        }
+
+        const aString = String(aValue).toLowerCase();
+        const bString = String(bValue).toLowerCase();
+        
+        return sortDirection === 'asc' 
+            ? aString.localeCompare(bString)
+            : bString.localeCompare(aString);
     });
 
     const headers = [
         { key: "number", label: "number" },
-        { key: "canton", label: "canton" },
-        { key: "location", label: "location" },
-        { key: "parcel", label: "parcel" },
+        { key: "name", label: "name" },
+        { key: "address", label: "address" },
     ];
 
     return (
         <div className="bg-white rounded-lg shadow-sm border border-gray-100">
             <div className="p-4 border-b border-gray-100">
                 <Link
-                    href={`/${lng}/projects/edit/new`}
+                    href={`/${lng}/customers/edit/new`}
                     className="flex items-center gap-2 text-blue-600 font-medium hover:bg-blue-50 px-4 py-2 rounded-lg transition-colors"
                 >
-                    <span className="text-xl">+</span> {t("addNew")}
+                    <span className="text-xl">+</span> {t("new")}
                 </Link>
             </div>
             <table className="min-w-full divide-y divide-gray-100">
@@ -87,10 +99,10 @@ const ProjectTable = ({ lng, projects }: ProjectTableProps) => {
                                 <div className="space-y-2">
                                     <div
                                         className="flex items-center justify-between gap-2 text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
-                                        onClick={() => handleSort(header.key)}
+                                        onClick={() => handleSort(header.key as keyof Customer)}
                                     >
                                         <span>{t(header.label)}</span>
-                                        <SortIcon field={header.key} />
+                                        <SortIcon field={header.key as keyof Customer} />
                                     </div>
                                     <div className="flex items-center gap-2 bg-white rounded-lg border border-gray-200 px-2 py-1">
                                         <Search size={14} className="text-gray-400" />
@@ -112,22 +124,21 @@ const ProjectTable = ({ lng, projects }: ProjectTableProps) => {
                     </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-100">
-                    {filteredProjects.map((project) => (
-                        <tr key={project.id}>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{project.number}</td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{project.location.canton}</td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{project.location.place}</td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{project.parcel}</td>
+                    {sortedCustomers.map((customer) => (
+                        <tr key={customer.id}>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{customer.number}</td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{customer.name}</td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{customer.address}</td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-right relative">
                                 <div className="relative">
-                                    <button onClick={() => toggleDropdown(project.id)} className="text-gray-400 hover:text-gray-500">
+                                    <button onClick={() => toggleDropdown(customer.id)} className="text-gray-400 hover:text-gray-500">
                                         <MoreHorizontal size={20} />
                                     </button>
-                                    {activeDropdown === project.id && (
+                                    {activeDropdown === customer.id && (
                                         <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
                                             <div className="py-1" role="menu">
                                                 <Link
-                                                    href={`/${lng}/projects/edit/${project.id}`}
+                                                    href={`/${lng}/customers/edit/${customer.id}`}
                                                     className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                                     role="menuitem"
                                                     onClick={() => setActiveDropdown(null)}
@@ -148,4 +159,4 @@ const ProjectTable = ({ lng, projects }: ProjectTableProps) => {
     );
 };
 
-export default ProjectTable;
+export default CustomerTable;

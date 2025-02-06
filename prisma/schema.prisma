@@ -59,7 +59,7 @@ model GroupPermission {
 }
 
 model Location {
-  id           Int      @id @default(autoincrement())
+  id           Int       @id @default(autoincrement())
   place        String
   zipCode      String
   number       Int
@@ -69,7 +69,28 @@ model Location {
   coordinateE  Float
   coordinateN  Float
   language     String
-  validity     Boolean  @default(true)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  validity     Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  projects     Project[]
+}
+
+model Project {
+  id        Int      @id @default(autoincrement())
+  number    Int
+  parcel    String
+  location  Location @relation(fields: [locationId], references: [id])
+  locationId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Customer {
+  id        Int      @id @default(autoincrement())
+  number    Int
+  name      String
+  address   String
+  comment   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
